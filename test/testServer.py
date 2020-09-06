@@ -1,11 +1,8 @@
 from lib.websocket_server import WebsocketServer
 import json
-import mmap
 import time
 from util.contants import *
-from threading import Timer
 import random
-import os, base64
 
 import sys
 sys.path.append('./device')
