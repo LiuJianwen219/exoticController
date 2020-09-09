@@ -12,12 +12,12 @@ params = {
     'FPGA_NUMBER': 'XC7K160T'
 }
 
-
+# check the .bit file exist
 def _validate_file(file_path):
     res = sp.check_output('file {}'.format(file_path), shell=True)
     # TODO
 
-
+# check the download cable and the fpga exist
 def _query_index():
     try:
         cmd = 'djtgcfg enum | grep "Device: {CABLE_NAME}"'.format(**params)
@@ -41,11 +41,11 @@ def _query_index():
     index = re.match(regex, res.decode('utf-8')).groups()[0]
     return index
 
-
+# available for out to check
 def check_alive():
     _query_index()
 
-
+# available for out tho download .bit
 def program_file(file_path):
     index = _query_index()
     _validate_file(file_path)
