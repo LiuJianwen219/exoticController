@@ -1,10 +1,11 @@
 # -*- coding:utf-8 -*-
 import json
+import os
 import time
 
 import requests
 
-from config import deviceNum, bitFilePath
+from config import *
 from module.rpi import *
 
 from util.contants import *
@@ -76,12 +77,15 @@ def on_message(ws, message):
         isUpload = dict_['content']['isUpload']
         bitFileName = dict_['content']['bitFileName']
 
-        url = "http://192.168.80.129:9000/experiment/download/?deviceId=" + \
+        url = "http://"+webIP+":"+webPort+"/experiment/download/?deviceId=" + \
               str(deviceNum) + "&userId=" + userId + "&type=" + type + "&expId=" + \
               expId + "&isUpload=" + str(isUpload) + "&bitFileName=" + bitFileName
         r = requests.get(url)  # create HTTP response object
 
         if r.status_code == 200:
+            print(bitFilePath)
+            if os.path.exists(bitFilePath):
+                print(os.getcwd())
             with open(bitFilePath, 'wb') as f:
                 f.write(r.content)
 
