@@ -6,25 +6,26 @@ import logging
 
 import requests
 
-from module.rpi import rpi
+# from module.rpi import rpi
 # from lib.state import env
 
 logger = logging.getLogger('rpi.' + __name__)
 
 
 def exit(ret, *args):
-    rpi.stop_streaming()
+    # rpi.stop_streaming() # stop video stream
+    logger.info("system over, bye~")
     sys.exit(ret)
 
 
-def download(url, file_path):
-    r = requests.get(url, stream=True)
-    if r.status_code == 200:
-        with open(file_path, 'wb') as f:
-            for chunk in r.iter_content(1024):
-                f.write(chunk)
-    else:
-        raise Exception('{}:{}'.format(r.status_code, r.reason))
+# def download(url, file_path):
+#     r = requests.get(url, stream=True)
+#     if r.status_code == 200:
+#         with open(file_path, 'wb') as f:
+#             for chunk in r.iter_content(1024):
+#                 f.write(chunk)
+#     else:
+#         raise Exception('{}:{}'.format(r.status_code, r.reason))
 
 
 def setup_trap():

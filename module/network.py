@@ -4,17 +4,19 @@ import os
 import time
 
 import requests
+import websocket
+from threading import Timer
 
 from config import *
-from module.rpi import *
+from module.rpi import rpi
 
 from util.contants import *
+
+logger = logging.getLogger('rpi.' + __name__)
 
 def on_message(ws, message):
     print(message)
     dict_ = json.loads(message)
-    # print(dict_)
-    # print(type(dict_))
     if dict_["type"] == UPDATE_DEVICE_SUCC:
         print("UPDATE_DEVICE_SUCC")
     elif dict_['type'] == ACQUIRE_DEVICE_FOR_EXP:
@@ -26,33 +28,33 @@ def on_message(ws, message):
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == ACT_SYNC_SW_BTN:
         data = {'type': ACT_SYNC_SW_BTN_SUCC,
-                'content': {'SWState': SWState, 'BTNState': BTNState}}
+                'content': {'SWState': rpi.SWState, 'BTNState': rpi.BTNState}}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == ACT_RELEASE:
         state = 0
     elif dict_['type'] == OP_SW_OPEN_DEVICE:
-        open_SW(dict_['content']['id'])
+        rpi.open_SW(dict_['content']['id'])
 
         data = {'type': OP_SW_CHANGED,
                 'content': {'id': dict_['content']['id'],
                             'changeTo': dict_['content']['changeTo']}}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_SW_CLOSE_DEVICE:
-        close_SW(dict_['content']['id'])
+        rpi.close_SW(dict_['content']['id'])
 
         data = {'type': OP_SW_CHANGED,
                 'content': {'id': dict_['content']['id'],
                             'changeTo': dict_['content']['changeTo']}}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_BTN_PRESS_DEVICE:
-        press_BTN(dict_['content']['id'])
+        rpi.press_BTN(dict_['content']['id'])
 
         data = {'type': OP_BTN_CHANGED,
                 'content': {'id': dict_['content']['id'],
                             'changeTo': dict_['content']['changeTo']}}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_BTN_RELEASE_DEVICE:
-        release_BTN(dict_['content']['id'])
+        rpi.release_BTN(dict_['content']['id'])
 
         data = {'type': OP_BTN_CHANGED,
                 'content': {'id': dict_['content']['id'],
@@ -60,7 +62,7 @@ def on_message(ws, message):
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_PS2_SEND:
 
-        sendPS2(dict_['content']['byte'])
+        rpi.sendPS2(dict_['content']['byte'])
 
         data = {'type': OP_PS2_SEND_SUCC}
         ws.send(json.dumps(data).encode("utf-8"))
@@ -89,7 +91,7 @@ def on_message(ws, message):
             with open(bitFilePath, 'wb') as f:
                 f.write(r.content)
 
-            programBit() # program the constant filepath
+            rpi.programBit() # program the constant filepath
 
             data = {'type': OP_PROGRAM_SUCC}
             ws.send(json.dumps(data).encode("utf-8"))
@@ -98,12 +100,12 @@ def on_message(ws, message):
             ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == REQ_SEG:
-        seg = getSEG()
+        seg = rpi.getSEG()
         data = {'type': REQ_SEG_SUCC, 'seg': seg}
         ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == REQ_LED:
-        led = getLED()
+        led = rpi.getLED()
         data = {'type': REQ_LED_SUCC, 'led': led}
         ws.send(json.dumps(data).encode("utf-8"))
 
@@ -129,6 +131,30 @@ def on_open(ws):
         'index': deviceNum,
         'time': time.time(),
         # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
-        'state': state,
+        'state': rpi.state,
     }
     ws.send(json.dumps(data).encode("utf-8"))
+
+
+
+def websocketServerStart():
+    websocket.enableTrace(True)
+    ws = websocket.WebSocketApp("ws://" + "localhost" + ":" + "20200",
+                                on_message=on_message,
+                                on_error=on_error,
+                                on_close=on_close)
+    ws.on_open = on_open
+
+    def sendBeat():
+        data = {
+            'type': UPDATE_DEVICE,
+            'index': deviceNum,
+            'time': time.time(), # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
+            'state': rpi.state,
+        }
+        ws.send(json.dumps(data).encode("utf-8"))
+        # Timer(1, sendBeat).start()
+
+    Timer(1, sendBeat).start()
+
+    ws.run_forever()
