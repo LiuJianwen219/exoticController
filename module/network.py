@@ -139,7 +139,7 @@ def on_open(ws):
 
 def websocketServerStart():
     websocket.enableTrace(True)
-    ws = websocket.WebSocketApp("ws://" + "localhost" + ":" + "20200",
+    ws = websocket.WebSocketApp("ws://" + host + ":" + port,
                                 on_message=on_message,
                                 on_error=on_error,
                                 on_close=on_close)

@@ -2,38 +2,39 @@
 import importlib
 import logging
 import subprocess as sp
-from tornado.options import options
 
 import device
+from config import deploy, platform
 from util import util
 
 logger = logging.getLogger('rpi.' + __name__)
 
 try:
-    if options.deploy == 'DEV':
-        platform = importlib.import_module('.mock', 'device')
+    if deploy == 'DEV':
+        platformC = importlib.import_module('.mock', 'module')
     else:
-        platform = importlib.import_module('.' + options.platform, 'device')
+        platformC = importlib.import_module('.' + platform, 'module')
 except ImportError:
     logger.error('Failed to find corresponding FPGA module named'
-                 '{}.py'.format(options.platform), exc_info=True)
+                 '{}.py'.format(platform), exc_info=True)
     util.exit(1)
 
 
 def check_alive():
-    platform.check_alive()
+    platformC.check_alive()
 
 
 def program_file(file_path):
-    return platform.program_file(file_path)
+    return platformC.program_file(file_path)
 
 
 def program_idle():
-    return platform.program_file('ext/' + options.platform + '.bit')
+    logger.info("--> program_idel() <--")
+    return platformC.program_file('ext/' + platform + '.bit')
 
 
 def check_djtgcfg():
-    if options.deploy == 'DEV':
+    if deploy == 'DEV':
         logger.debug('Function "fpga.check_djtgcfg()" called in development mode.')
         return
 
