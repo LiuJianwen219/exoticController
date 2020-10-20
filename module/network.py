@@ -14,6 +14,76 @@ from util.contants import *
 
 logger = logging.getLogger('rpi.' + __name__)
 
+
+# Get video information
+import ctypes
+import inspect
+import threading
+import subprocess as sp
+
+fps = 25
+width = 960
+height = 540
+
+p1cmd = ['raspivid', '-t', '0', '-w', '960', '-h', '540', '-fps', '25', '-b', '500000','-vf', '-hf', '-o', '-']
+p2cmd = ['ffmpeg', '-i', '-', '-vcodec', 'copy', '-an', '-r', '25', '-f', 'flv', 'rtmp://10.14.30.15/live/device0']
+cmdList = []
+cmdList.append(p2cmd)
+cmdList.append(p1cmd)
+# global p1, p2
+p1 = sp.Popen(p1cmd, stdout=sp.PIPE, stderr=open(os.devnull, 'wb'))
+p2 = sp.Popen(p2cmd, stdin=sp.PIPE)
+
+
+def _async_raise(tid, exctype):
+    """raises the exception, performs cleanup if needed"""
+    tid = ctypes.c_long(tid)
+    if not inspect.isclass(exctype):
+        exctype = type(exctype)
+    res = ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, ctypes.py_object(exctype))
+    if res == 0:
+        raise ValueError("invalid thread id")
+    elif res != 1:
+        ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
+        raise SystemError("PyThreadState_SetAsyncExc failed")
+
+
+def stop_thread(thread):
+    _async_raise(thread.ident, SystemExit)
+
+
+def push():
+    global p1, p2
+    p1.stdout.flush()
+    while True:
+        line = p1.stdout.readline()
+        if not line:
+            break
+        p2.stdin.write(line)
+
+def get_thread():
+    pid = os.getpid()
+    global state
+    while True:
+        ts = threading.enumerate()
+        print('------- Running threads On Pid: %d -------' % pid)
+        for t in ts:
+            print(t.name, t.ident)
+            if state == 0:
+                if t.name == 'pushing_stream_thread':
+                    print("killing thread")
+                    stop_thread(t)
+        print()
+        time.sleep(1)
+
+
+t3 = threading.Thread(target=get_thread)
+t3.setName('Checker')
+t3.setDaemon(True)
+t3.start()
+
+##---------------------------------------------------------
+
 def on_message(ws, message):
     print(message)
     dict_ = json.loads(message)
@@ -26,6 +96,13 @@ def on_message(ws, message):
         data = {'type': ACQUIRE_DEVICE_SUCC_EXP,
                 'content': {'device': deviceNum, 'Uid': dict_['content']['Uid']}}
         ws.send(json.dumps(data).encode("utf-8"))
+
+        # open a new thread to write to the pipe
+        threadpush = threading.Thread(target=push)
+        threadpush.setDaemon(True)
+        threadpush.setName("pushing_stream_thread")
+        threadpush.start()
+
     elif dict_['type'] == ACT_SYNC_SW_BTN:
         data = {'type': ACT_SYNC_SW_BTN_SUCC,
                 'content': {'SWState': rpi.SWState, 'BTNState': rpi.BTNState}}
