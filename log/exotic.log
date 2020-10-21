@@ -1,0 +1,169 @@
+2020-09-09 09:44:11 ljw: ERROR D:/0Web/exoticController/config.py:16 : check program path
+2020-09-09 09:44:48 ljw ERROR D:/0Web/exoticController/config.py:16 : check program path
+2020-09-09 09:49:17 exotic ERROR D:/0Web/exoticController/config.py:18 : check program path
+2020-09-09 09:50:06 exotic INFO D:/0Web/exoticController/config.py:18 : check program path
+2020-09-09 09:50:38 exotic INFO D:/0Web/exoticController/config.py:18 : check program path
+2020-09-09 09:50:52 exotic INFO D:/0Web/exoticController/config.py:18 : check program path
+2020-09-09 09:51:15 exotic INFO D:/0Web/exoticController/config.py:18 : check program path
+2020-09-09 10:39:16 exotic ERROR D:/0Web/exoticController/config.py:19 : check program path
+2020-09-09 15:23:29 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:23:30 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=6&isUpload=False&bitFileName=default_10.bit HTTP/1.1" 500 70652
+2020-09-09 15:23:50 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:23:51 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=6&isUpload=False&bitFileName=default_10.bit HTTP/1.1" 500 70652
+2020-09-09 15:23:52 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:23:53 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=6&isUpload=False&bitFileName=default_10.bit HTTP/1.1" 500 70652
+2020-09-09 15:23:54 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:23:54 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=6&isUpload=False&bitFileName=default_10.bit HTTP/1.1" 500 70652
+2020-09-09 15:24:48 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:24:49 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=7&isUpload=False&bitFileName=default_2.bit HTTP/1.1" 200 6692684
+2020-09-09 15:30:57 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:30:57 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=7&isUpload=False&bitFileName=default_2.bit HTTP/1.1" 200 6692684
+2020-09-09 15:35:51 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:35:52 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=7&isUpload=False&bitFileName=default_2.bit HTTP/1.1" 200 6692684
+2020-09-09 15:36:12 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:36:12 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId='1'&userId=12&type=free&expId=7&isUpload=False&bitFileName=default_2.bit HTTP/1.1" 200 6692684
+2020-09-09 15:46:39 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:46:39 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId=1&userId=12&type=free&expId=7&isUpload=False&bitFileName=default_2.bit HTTP/1.1" 200 6692684
+2020-09-09 15:46:59 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:47:00 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId=1&userId=12&type=free&expId=7&isUpload=False&bitFileName=default_2.bit HTTP/1.1" 200 6692684
+2020-09-09 15:50:53 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:50:54 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId=1&userId=12&type=free&expId=7&isUpload=True&bitFileName=free2.bit HTTP/1.1" 500 79068
+2020-09-09 15:58:54 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 15:58:55 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId=1&userId=12&type=free&expId=6&isUpload=True&bitFileName=free2_2.bit HTTP/1.1" 500 79101
+2020-09-09 16:01:34 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 16:01:34 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId=1&userId=12&type=free&expId=6&isUpload=True&bitFileName=free2_5.bit HTTP/1.1" 200 12
+2020-09-09 16:02:06 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 16:02:06 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId=1&userId=12&type=free&expId=6&isUpload=True&bitFileName=free2_6.bit HTTP/1.1" 200 12
+2020-09-09 16:03:06 requests.packages.urllib3.connectionpool INFO /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:214 : Starting new HTTP connection (1): 192.168.80.129
+2020-09-09 16:03:06 requests.packages.urllib3.connectionpool DEBUG /home/ljw/venv/lib64/python3.6/site-packages/requests/packages/urllib3/connectionpool.py:401 : "GET /experiment/download/?deviceId=1&userId=9&type=free&expId=5&isUpload=True&bitFileName=free2_7.bit HTTP/1.1" 200 12
+2020-09-09 20:27:00 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-09 20:27:23 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-09 20:43:09 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 13:30:02 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 13:30:29 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 13:30:34 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 13:37:44 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 13:38:17 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 13:38:27 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 13:38:38 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 14:02:13 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 14:05:03 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 14:08:45 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-10 14:20:35 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-13 13:53:58 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 13:53:58 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-13 13:56:30 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 13:56:30 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-13 13:56:32 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 13:56:32 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-13 13:58:09 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 13:58:09 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-13 13:58:47 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:46 : Function "rpi.init()" called in development mode.
+2020-09-13 13:58:47 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-13 13:58:47 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-13 13:58:47 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-13 13:59:04 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:76 : DEV: SW_mode:one2one open sw 0
+2020-09-13 13:59:06 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:90 : DEV: SW_mode:one2one close sw 0
+2020-09-13 13:59:11 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 1
+2020-09-13 13:59:12 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 1
+2020-09-13 13:59:13 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 1
+2020-09-13 13:59:13 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 1
+2020-09-13 13:59:14 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 1
+2020-09-13 13:59:14 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 1
+2020-09-13 13:59:14 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 1
+2020-09-13 13:59:16 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 1
+2020-09-13 13:59:17 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 2
+2020-09-13 13:59:17 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 2
+2020-09-13 13:59:17 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 3
+2020-09-13 13:59:17 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 3
+2020-09-13 13:59:18 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 7
+2020-09-13 13:59:18 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 7
+2020-09-13 13:59:19 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 6
+2020-09-13 13:59:20 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 6
+2020-09-13 14:01:42 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:76 : DEV: SW_mode:one2one open sw 0
+2020-09-13 14:01:47 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:90 : DEV: SW_mode:one2one close sw 0
+2020-09-13 14:01:49 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 8
+2020-09-13 14:01:51 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 8
+2020-09-13 14:01:52 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 7
+2020-09-13 14:01:54 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 7
+2020-09-13 14:01:55 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:76 : DEV: SW_mode:one2one open sw 3
+2020-09-13 14:01:56 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:90 : DEV: SW_mode:one2one close sw 3
+2020-09-13 14:01:57 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 4
+2020-09-13 14:01:59 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 4
+2020-09-13 14:02:03 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 12
+2020-09-13 14:02:05 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 12
+2020-09-13 14:02:06 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 1
+2020-09-13 14:02:07 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 1
+2020-09-13 14:02:08 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:104 : DEV: press btn 1
+2020-09-13 14:02:08 rpi.module.rpi INFO /mnt/hgfs/0Web/exoticController/module/rpi.py:114 : DEV: release btn 1
+2020-09-13 14:10:15 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-14 09:04:45 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:04:45 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:04:45 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:04:45 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:07:21 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:07:21 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:07:21 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:07:21 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:08:12 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:08:12 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:08:12 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:08:12 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:09:22 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:09:22 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:09:22 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:09:22 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:10:45 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:10:45 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:10:45 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:10:45 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:11:25 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:11:25 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:11:25 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:11:25 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:11:28 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~
+2020-09-14 09:14:03 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:14:03 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:14:03 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:14:03 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:14:14 rpi.module.rpi DEBUG /mnt/hgfs/0Web/exoticController/module/rpi.py:47 : Function "rpi.init()" called in development mode.
+2020-09-14 09:14:14 rpi.module.fpga DEBUG /mnt/hgfs/0Web/exoticController/module/fpga.py:38 : Function "fpga.check_djtgcfg()" called in development mode.
+2020-09-14 09:14:14 rpi.module.mock INFO /mnt/hgfs/0Web/exoticController/module/mock.py:16 : Mock FPGA is alive.
+2020-09-14 09:14:14 rpi.module.fpga INFO /mnt/hgfs/0Web/exoticController/module/fpga.py:55 : Successfully connected to the FPGA board.
+2020-09-14 09:14:17 rpi.util.util INFO /mnt/hgfs/0Web/exoticController/util/util.py:17 : system over, bye~

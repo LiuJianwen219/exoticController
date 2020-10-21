@@ -26,7 +26,7 @@ width = 960
 height = 540
 
 p1cmd = ['raspivid', '-t', '0', '-w', '960', '-h', '540', '-fps', '25', '-b', '500000','-vf', '-hf', '-o', '-']
-p2cmd = ['ffmpeg', '-i', '-', '-vcodec', 'copy', '-an', '-r', '25', '-f', 'flv', 'rtmp://10.14.30.15/live/device0']
+p2cmd = ['ffmpeg', '-i', '-', '-vcodec', 'copy', '-an', '-r', '25', '-f', 'flv', 'rtmp://10.14.30.15/live/device'+str(deviceNum)]
 cmdList = []
 cmdList.append(p2cmd)
 cmdList.append(p1cmd)

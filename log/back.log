@@ -1,0 +1,53 @@
+2020-09-09 09:42:23 ljw:ERROR check program path:D:/0Web/exoticController/config.py:16
+2020-09-09 09:44:11 ljw: ERROR D:/0Web/exoticController/config.py:16 : check program path
+2020-09-09 09:44:48 ljw ERROR D:/0Web/exoticController/config.py:16 : check program path
+2020-09-09 09:49:17 exotic ERROR D:/0Web/exoticController/config.py:18 : check program path
+2020-09-09 10:39:16 exotic ERROR D:/0Web/exoticController/config.py:19 : check program path
+2020-09-13 13:53:58 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 13:56:30 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 13:56:32 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 13:58:09 rpi.module.fpga ERROR /mnt/hgfs/0Web/exoticController/module/fpga.py:19 : Failed to find corresponding FPGA module namedsword.py
+Traceback (most recent call last):
+  File "/mnt/hgfs/0Web/exoticController/module/fpga.py", line 14, in <module>
+    platformC = importlib.import_module('.mock', 'device')
+  File "/usr/local/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 953, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'device.mock'
+2020-09-13 14:01:49 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 8
+2020-09-13 14:01:51 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 8
+2020-09-13 14:01:52 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 7
+2020-09-13 14:01:54 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 7
+2020-09-13 14:01:57 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 4
+2020-09-13 14:01:59 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 4
+2020-09-13 14:02:03 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:73 : sw index error 12
+2020-09-13 14:02:05 rpi.module.rpi ERROR /mnt/hgfs/0Web/exoticController/module/rpi.py:87 : sw index error 12
