@@ -11,9 +11,9 @@ logger = logging.getLogger('rpi.' + __name__)
 
 try:
     if deploy == 'DEV':
-        platformC = importlib.import_module('.mock', 'module')
+        platformC = importlib.import_module('.mock', 'device')
     else:
-        platformC = importlib.import_module('.' + platform, 'module')
+        platformC = importlib.import_module('.' + platform, 'device')
 except ImportError:
     logger.error('Failed to find corresponding FPGA module named'
                  '{}.py'.format(platform), exc_info=True)
