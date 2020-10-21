@@ -62,6 +62,15 @@ class RPI:
         self._SWITCH_INIT() # 程序启动时，初始化 SW 的状态为全 0
         logger.info('GPIO ports initialization done.')
 
+    def setStateBusy(self):
+        self.state = 1
+
+    def setStateFree(self):
+        self.state = 0
+
+    def getRPIState(self):
+        return self.state
+
 
     def _BUTTON_INIT(self):
         write(BUTTONS_OUT[0], 1)

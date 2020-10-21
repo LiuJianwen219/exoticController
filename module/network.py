@@ -14,13 +14,13 @@ from util.contants import *
 
 logger = logging.getLogger('rpi.' + __name__)
 
-
 # Get video information
 import ctypes
 import inspect
 import threading
 import subprocess as sp
 
+state = 0
 fps = 25
 width = 960
 height = 540
@@ -91,8 +91,8 @@ def on_message(ws, message):
         print("UPDATE_DEVICE_SUCC")
     elif dict_['type'] == ACQUIRE_DEVICE_FOR_EXP:
         print(dict_['content']['Uid'])
-        global state
-        state = 1
+        rpi.setStateBusy()
+
         data = {'type': ACQUIRE_DEVICE_SUCC_EXP,
                 'content': {'device': deviceNum, 'Uid': dict_['content']['Uid']}}
         ws.send(json.dumps(data).encode("utf-8"))
@@ -107,8 +107,10 @@ def on_message(ws, message):
         data = {'type': ACT_SYNC_SW_BTN_SUCC,
                 'content': {'SWState': rpi.SWState, 'BTNState': rpi.BTNState}}
         ws.send(json.dumps(data).encode("utf-8"))
+
     elif dict_['type'] == ACT_RELEASE:
-        state = 0
+        rpi.setStateFree()
+
     elif dict_['type'] == OP_SW_OPEN_DEVICE:
         rpi.open_SW(dict_['content']['id'])
 
@@ -208,7 +210,7 @@ def on_open(ws):
         'index': deviceNum,
         'time': time.time(),
         # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
-        'state': rpi.state,
+        'state': rpi.getRPIState(),
     }
     ws.send(json.dumps(data).encode("utf-8"))
 
@@ -227,7 +229,7 @@ def websocketServerStart():
             'type': UPDATE_DEVICE,
             'index': deviceNum,
             'time': time.time(), # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
-            'state': rpi.state,
+            'state': rpi.getRPIState(),
         }
         ws.send(json.dumps(data).encode("utf-8"))
         # Timer(1, sendBeat).start()
