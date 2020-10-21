@@ -30,27 +30,7 @@ p2cmd = ['ffmpeg', '-i', '-', '-vcodec', 'copy', '-an', '-r', '25', '-f', 'flv',
 cmdList = []
 cmdList.append(p2cmd)
 cmdList.append(p1cmd)
-# global p1, p2
-p1 = sp.Popen(p1cmd, stdout=sp.PIPE, stderr=open(os.devnull, 'wb'))
-p2 = sp.Popen(p2cmd, stdin=sp.PIPE)
-
-
-def _async_raise(tid, exctype):
-    """raises the exception, performs cleanup if needed"""
-    tid = ctypes.c_long(tid)
-    if not inspect.isclass(exctype):
-        exctype = type(exctype)
-    res = ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, ctypes.py_object(exctype))
-    if res == 0:
-        raise ValueError("invalid thread id")
-    elif res != 1:
-        ctypes.pythonapi.PyThreadState_SetAsyncExc(tid, None)
-        raise SystemError("PyThreadState_SetAsyncExc failed")
-
-
-def stop_thread(thread):
-    _async_raise(thread.ident, SystemExit)
-
+global p1, p2
 
 def push():
     global p1, p2
@@ -61,32 +41,12 @@ def push():
             break
         p2.stdin.write(line)
 
-def get_thread():
-    pid = os.getpid()
-    global state
-    while True:
-        ts = threading.enumerate()
-        print('------- Running threads On Pid: %d -------' % pid)
-        for t in ts:
-            print(t.name, t.ident)
-            if state == 0:
-                if t.name == 'pushing_stream_thread':
-                    print("killing thread")
-                    stop_thread(t)
-        print()
-        time.sleep(1)
-
-
-t3 = threading.Thread(target=get_thread)
-t3.setName('Checker')
-t3.setDaemon(True)
-t3.start()
-
 ##---------------------------------------------------------
 
 def on_message(ws, message):
     print(message)
     dict_ = json.loads(message)
+    global p1,p2
     if dict_["type"] == UPDATE_DEVICE_SUCC:
         print("UPDATE_DEVICE_SUCC")
     elif dict_['type'] == ACQUIRE_DEVICE_FOR_EXP:
@@ -97,6 +57,9 @@ def on_message(ws, message):
                 'content': {'device': deviceNum, 'Uid': dict_['content']['Uid']}}
         ws.send(json.dumps(data).encode("utf-8"))
 
+        #start subprocess
+        p1 = sp.Popen(p1cmd, stdout=sp.PIPE, stderr=open(os.devnull, 'wb'))
+        p2 = sp.Popen(p2cmd, stdin=sp.PIPE)
         # open a new thread to write to the pipe
         threadpush = threading.Thread(target=push)
         threadpush.setDaemon(True)
@@ -110,6 +73,9 @@ def on_message(ws, message):
 
     elif dict_['type'] == ACT_RELEASE:
         rpi.setStateFree()
+        #stop the sub process
+        p1.kill()
+        p2.kill()
 
     elif dict_['type'] == OP_SW_OPEN_DEVICE:
         rpi.open_SW(dict_['content']['id'])
