@@ -33,6 +33,11 @@ PS2_DAT_PIN = 29
 RPI_INPUTS  = [4, 5, 6, 7]
 RPI_OUTPUTS = [0, 1, 2, 3, 24, 25]
 
+TEST_DATA = [10, 11, 12, 13, 14]
+TEST_CLK = 15
+
+
+
 logger = logging.getLogger('rpi.' + __name__)
 
 
@@ -60,6 +65,7 @@ class RPI:
         # self.serial_port = serial.Serial(SERIAL_DEV, **uart_opts)
         self._BUTTON_INIT() # 初始化 BUTTON 输出为 1
         self._SWITCH_INIT() # 程序启动时，初始化 SW 的状态为全 0
+        self._READ_DATA_INIT() # 初始化读取数据的时钟
         logger.info('GPIO ports initialization done.')
 
     def setStateBusy(self):
@@ -80,6 +86,9 @@ class RPI:
 
     def _SWITCH_INIT(self):
         self._WRITE_SN74HC595()
+
+    def _READ_DATA_INIT(self):
+        write(TEST_CLK, 0)
 
 
     def open_SW(self, index):
@@ -157,6 +166,18 @@ class RPI:
             self.LEDState[i] = (self.LEDState[i] + random.randint(0, 16)) % 2
         return self.LEDState
 
+    def get_4SEG_1LED(self):
+        data = self._READ_4SEG_1LED()
+        for i in range(0, 16):
+            if i&1 :
+                index = data['seg'][i-1]<<4 + data['seg'][i]
+                logger.error(index)
+                # self.SEGState[i] = index
+                self.SEGState[i] = random.randint(0, 8) % 8
+            # self.LEDState[i] = data['led'][i]
+            self.LEDState[i] = random.randint(0, 16) % 2
+        return {'seg': self.SEGState, 'led': self.LEDState}
+
 
     def _WRITE_SN74HC595(self):
         for s in self.SWState:  # 4.5v工作电压下，最多支持25MHz；2v工作电压下，最多支持5MHz
@@ -216,6 +237,32 @@ class RPI:
         write(BUTTONS_OUT[col], 1)
         self.BTNState[id] = 0
         return flag
+
+    def _READ_4SEG_1LED(self):
+        seg = []
+        led = []
+        write(TEST_CLK, 1)
+        time.sleep(0.005)
+        write(TEST_CLK, 0)
+        time.sleep(0.005)
+        for i in range(0, 16):
+            write(TEST_CLK, 1)
+            time.sleep(0.005)
+
+            tmp = 0
+            for j in range(0, 4):
+                tmp = (tmp<<1) | read(TEST_DATA[j])
+            logger.error(tmp)
+            # seg.append(tmp % 16)
+            seg.append(tmp)
+            # led.append(read(TEST_DATA[4]) % 2)
+            led.append(read(TEST_DATA[4]))
+
+            write(TEST_CLK, 0)
+            time.sleep(0.005)
+
+        write(TEST_CLK, 0)
+        return {'seg': seg, 'led': led}
 
 
 def write(pin, val):

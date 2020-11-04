@@ -70,6 +70,8 @@ types = [
     'REQ_SEG_SUCC',
     'REQ_LED',
     'REQ_LED_SUCC',
+    'REQ_READ_DATA',
+    'REQ_READ_DATA_SUCC',
 
     'OP_PROGRAM',
     'OP_PROGRAM_SUCC',

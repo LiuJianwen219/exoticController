@@ -154,6 +154,12 @@ def on_message(ws, message):
         data = {'type': REQ_LED_SUCC, 'led': led}
         ws.send(json.dumps(data).encode("utf-8"))
 
+    elif dict_['type'] == REQ_READ_DATA:
+        seg_led = rpi.get_4SEG_1LED()
+        data = {'type': REQ_READ_DATA_SUCC, 'seg': seg_led['seg'], 'led': seg_led['led']}
+        ws.send(json.dumps(data).encode("utf-8"))
+
+
     elif dict_['type'] == INIT_FILE_UPLOAD:
         data = {'type': INIT_FILE_UPLOAD_SUCC}
         ws.send(json.dumps(data).encode("utf-8"))
