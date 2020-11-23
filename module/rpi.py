@@ -33,8 +33,8 @@ PS2_DAT_PIN = 29
 RPI_INPUTS  = [4, 5, 6, 7]
 RPI_OUTPUTS = [0, 1, 2, 3, 24, 25]
 
-TEST_DATA = [10, 11, 12, 13, 14]
-TEST_CLK = 15
+SEGLED_DATA = [26, 27, 28, 29, 31]
+SEGLED_CLK = 11
 
 
 
@@ -88,7 +88,7 @@ class RPI:
         self._WRITE_SN74HC595()
 
     def _READ_DATA_INIT(self):
-        write(TEST_CLK, 0)
+        write(SEGLED_CLK, 0)
 
 
     def open_SW(self, index):
@@ -171,7 +171,7 @@ class RPI:
         for i in range(0, 16):
             if i&1 :
                 index = data['seg'][i-1]<<4 + data['seg'][i]
-                logger.error(index)
+                logger.error("index:" + str(index))
                 # self.SEGState[i] = index
                 self.SEGState[i] = random.randint(0, 8) % 8
             # self.LEDState[i] = data['led'][i]
@@ -241,27 +241,27 @@ class RPI:
     def _READ_4SEG_1LED(self):
         seg = []
         led = []
-        write(TEST_CLK, 1)
+        write(SEGLED_CLK, 1)
         time.sleep(0.005)
-        write(TEST_CLK, 0)
+        write(SEGLED_CLK, 0)
         time.sleep(0.005)
         for i in range(0, 16):
-            write(TEST_CLK, 1)
+            write(SEGLED_CLK, 1)
             time.sleep(0.005)
 
             tmp = 0
             for j in range(0, 4):
-                tmp = (tmp<<1) | read(TEST_DATA[j])
+                tmp = (tmp<<1) | read(SEGLED_DATA[j])
             logger.error(tmp)
             # seg.append(tmp % 16)
             seg.append(tmp)
-            # led.append(read(TEST_DATA[4]) % 2)
-            led.append(read(TEST_DATA[4]))
+            # led.append(read(SEGLED_DATA[4]) % 2)
+            led.append(read(SEGLED_DATA[4]))
 
-            write(TEST_CLK, 0)
+            write(SEGLED_CLK, 0)
             time.sleep(0.005)
 
-        write(TEST_CLK, 0)
+        write(SEGLED_CLK, 0)
         return {'seg': seg, 'led': led}
 
 
