@@ -172,8 +172,8 @@ class RPI:
             if i&1 :
                 index = data['seg'][i-1]<<4 + data['seg'][i]
                 logger.error("index:" + str(index))
-                self.SEGState[i] = index
-                # self.SEGState[i] = random.randint(0, 8) % 8
+                self.SEGState[i>>1] = index
+                # self.SEGState[i>>1] = random.randint(0, 8) % 8
             self.LEDState[i] = data['led'][i]
             # self.LEDState[i] = random.randint(0, 16) % 2
         return {'seg': self.SEGState, 'led': self.LEDState}
