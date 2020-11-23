@@ -170,8 +170,8 @@ class RPI:
         data = self._READ_4SEG_1LED()
         for i in range(0, 16):
             if i&1 :
-                index = data['seg'][i-1]<<4 + data['seg'][i]
-                logger.error("index:" + str(index))
+                index = ((data['seg'][i-1]&15)<<4) | (data['seg'][i]&15)
+                logger.error("index: " + data['seg'][i-1] + " " + data['seg'][i] + " " + str(index))
                 self.SEGState[i>>1] = index
                 # self.SEGState[i>>1] = random.randint(0, 8) % 8
             self.LEDState[i] = data['led'][i]
