@@ -88,7 +88,7 @@ class RPI:
         self._WRITE_SN74HC595()
 
     def _READ_DATA_INIT(self):
-        write(SEGLED_CLK, 1)
+        write(SEGLED_CLK, 0)
 
 
     def open_SW(self, index):
@@ -242,12 +242,12 @@ class RPI:
         seg = []
         led = []
         write(SEGLED_CLK, 1)
-        time.sleep(0.005)
+        # time.sleep(0.005)
         write(SEGLED_CLK, 0)
-        time.sleep(0.005)
+        # time.sleep(0.005)
         for i in range(0, 16):
             write(SEGLED_CLK, 1)
-            time.sleep(0.005)
+            # time.sleep(0.005)
 
             tmp = 0
             for j in range(0, 4):
@@ -259,7 +259,7 @@ class RPI:
             led.append(read(SEGLED_DATA[4]))
 
             write(SEGLED_CLK, 0)
-            time.sleep(0.005)
+            # time.sleep(0.005)
 
         write(SEGLED_CLK, 0)
         return {'seg': seg, 'led': led}
