@@ -131,6 +131,7 @@ class RPI:
         self.BTNState[index] = 0
     def sendPS2(self, byte):
         print("send " + byte)
+        self._WRITE_PS2_8BIT(byte)
 
     # #Temporary code for sending a ps/2 scan code via uart
     # def send_ps2_keydown(self, code):
