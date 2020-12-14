@@ -165,7 +165,7 @@ class RPI:
         for i in range(0, 16):
             if i&1 :
                 index = ((data['seg'][i]&15)<<4) | (data['seg'][i-1]&15)
-                logger.error("index: " + str(data['seg'][i-1]) + " " + str(data['seg'][i]) + " " + str(index))
+                # logger.error("index: " + str(data['seg'][i-1]) + " " + str(data['seg'][i]) + " " + str(index))
                 self.SEGState[i>>1] = index
                 # self.SEGState[i>>1] = random.randint(0, 8) % 8
             self.LEDState[i] = data['led'][i]
@@ -265,7 +265,7 @@ class RPI:
             tmp = 0
             for j in range(0, 4):
                 tmp = (tmp<<1) | read(SEGLED_DATA[j])
-            logger.error(tmp)
+            # logger.error(tmp)
             # seg.append(tmp % 16)
             seg.append(tmp)
             # led.append(read(SEGLED_DATA[4]) % 2)
