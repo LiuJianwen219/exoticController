@@ -5,6 +5,7 @@ import wiringpi
 
 from config import *
 from module import fpga
+from util.scancode import *
 from util.contants import *
 
 # ALL_GPIO = [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23, 24, 25, 26, 27, 28, 29]
@@ -27,10 +28,10 @@ BUTTONS_OUT = [0, 1, 2, 3]
 SER_595 = 24
 CLK_595 = 25
 
-PS2_CLK_PIN = 28
-PS2_DAT_PIN = 29
+PS2_CLK = 22
+PS2_DAT = 23
 
-RPI_INPUTS  = [4, 5, 6, 7, 26, 27, 28, 29, 31]
+RPI_INPUTS  = [4, 5, 6, 7, 22, 23, 26, 27, 28, 29, 31]
 RPI_OUTPUTS = [0, 1, 2, 3, 24, 25, 11]
 
 SEGLED_DATA = [26, 27, 28, 29, 31]
@@ -63,6 +64,7 @@ class RPI:
         # wiringpi.setPadDrive(0, 7) # 设置引脚组的驱动能力。设置引脚组 0的驱动能力为 7，也就是驱动能力最大
         # wiringpi.digitalWrite(LCD_CTRL, 1)
         # self.serial_port = serial.Serial(SERIAL_DEV, **uart_opts)
+        self._PS2_INIT()    # 初始化PS2为 输出 1
         self._BUTTON_INIT() # 初始化 BUTTON 输出为 1
         self._SWITCH_INIT() # 程序启动时，初始化 SW 的状态为全 0
         self._READ_DATA_INIT() # 初始化读取数据的时钟
@@ -70,23 +72,22 @@ class RPI:
 
     def setStateBusy(self):
         self.state = 1
-
     def setStateFree(self):
         self.state = 0
-
     def getRPIState(self):
         return self.state
 
 
+    def _PS2_INIT(self):
+        write(PS2_DAT, 1)
+        write(PS2_CLK, 1)
     def _BUTTON_INIT(self):
         write(BUTTONS_OUT[0], 1)
         write(BUTTONS_OUT[1], 1)
         write(BUTTONS_OUT[2], 1)
         write(BUTTONS_OUT[3], 1)
-
     def _SWITCH_INIT(self):
         self._WRITE_SN74HC595()
-
     def _READ_DATA_INIT(self):
         write(SEGLED_CLK, 0)
 
@@ -101,7 +102,6 @@ class RPI:
         else:
             self.SWState[index] = 1
             self._WRITE_SN74HC595()
-
     def close_SW(self, index):
         if index not in SWITCHES:
             logger.error("sw index error {}".format(index))
@@ -112,7 +112,6 @@ class RPI:
         else:
             self.SWState[index] = 0
             self._WRITE_SN74HC595()
-
     def press_BTN(self, index):
         if index not in BUTTONS:
             logger.error("btn index error {}".format(index))
@@ -122,7 +121,6 @@ class RPI:
             return
         if not self._MATRIX_BUTTON_4_4_DOWN(index):
             logger.warning("button signal not process success")
-
     def release_BTN(self, index):
         if index not in BUTTONS:
             logger.error("btn index error {}".format(index))
@@ -131,7 +129,6 @@ class RPI:
             logger.info("DEV: release btn {}".format(index))
             return
         self.BTNState[index] = 0
-
     def sendPS2(self, byte):
         print("send " + byte)
 
@@ -148,24 +145,20 @@ class RPI:
     #     if code in SCANCODE_KEYUP:
     #         self.ps2_uart_port.write(SCANCODE_KEYUP[code])
 
-
     def programBit(self):
         if deploy == "DEV":
             print("program Bit, path: " + bitFilePath)
             return
         fpga.program_file(bitFilePath)
 
-
-    def getSEG(self):
-        for i in range(0, 8):
-            self.SEGState[i] = (self.SEGState[i] + random.randint(0, 8)) % 8
-        return self.SEGState
-
-    def getLED(self):
-        for i in range(0, 16):
-            self.LEDState[i] = (self.LEDState[i] + random.randint(0, 16)) % 2
-        return self.LEDState
-
+    #def getSEG(self): # 软件模拟，废弃
+    #    for i in range(0, 8):
+    #        self.SEGState[i] = (self.SEGState[i] + random.randint(0, 8)) % 8
+    #    return self.SEGState
+    #def getLED(self): # 软件模拟，废弃
+    #    for i in range(0, 16):
+    #        self.LEDState[i] = (self.LEDState[i] + random.randint(0, 16)) % 2
+    #    return self.LEDState
     def get_4SEG_1LED(self):
         data = self._READ_4SEG_1LED()
         for i in range(0, 16):
@@ -178,6 +171,25 @@ class RPI:
             # self.LEDState[i] = random.randint(0, 16) % 2
         return {'seg': self.SEGState, 'led': self.LEDState}
 
+
+    def _WRITE_PS2_8BIT(self, asciiCode):
+        if(asciiCode not in SCANCODE_KEYDOWN):
+            return
+        write(PS2_DAT, 0) # 启动
+        write(PS2_CLK, 0)
+        write(PS2_CLK, 1)
+        cnt = 0
+        for i in range(0, 8): # 8位数据
+            cnt += SCANCODE_KEYDOWN[asciiCode]&SCANCODE_MAST[i]
+            write(PS2_DAT, SCANCODE_KEYDOWN[asciiCode]&SCANCODE_MAST[i])
+            write(PS2_CLK, 0)
+            write(PS2_CLK, 1)
+        write(PS2_DAT, (cnt&1)^1) # 1位奇校验码，最终 1的个数为奇数
+        write(PS2_CLK, 0)
+        write(PS2_CLK, 1)
+        write(PS2_DAT, 1)  # 1位停止位，始终为 1
+        write(PS2_CLK, 0)
+        write(PS2_CLK, 1)
 
     def _WRITE_SN74HC595(self):
         for s in self.SWState:  # 4.5v工作电压下，最多支持25MHz；2v工作电压下，最多支持5MHz

@@ -1,5 +1,9 @@
 #This file dictates conversions from ascii to ps/2 scan code, which are used in ps/2 keyboard emulation.
 
+SCANCODE_MAST = [
+    0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
+]
+
 SCANCODE_KEYDOWN = {
     27: [0x76], #esc
     192:[0x0e], #~
