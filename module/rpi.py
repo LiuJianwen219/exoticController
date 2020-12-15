@@ -181,8 +181,13 @@ class RPI:
         write(PS2_CLK, 1)
         cnt = 0
         for i in range(0, 8): # 8位数据
-            cnt += SCANCODE_KEYDOWN[asciiCode]&SCANCODE_MAST[i]
-            write(PS2_DAT, SCANCODE_KEYDOWN[asciiCode]&SCANCODE_MAST[i])
+            if SCANCODE_KEYDOWN[asciiCode]&SCANCODE_MAST[i] > 0:
+                logger.error(str(i) + str(1))
+                cnt += 1
+                write(PS2_DAT, 1)
+            else:
+                logger.error(str(i) + str(0))
+                write(PS2_DAT, 0)
             write(PS2_CLK, 0)
             write(PS2_CLK, 1)
         write(PS2_DAT, (cnt&1)^1) # 1位奇校验码，最终 1的个数为奇数
@@ -283,7 +288,7 @@ def write(pin, val):
         logger.debug('Function "rpi.write()" called with pin={}, val={} '
                      'in development mode.'.format(pin, val))
         return
-    logger.info('rpi write ' + str(val) + ' to pin ' + str(pin))
+    # logger.info('rpi write ' + str(val) + ' to pin ' + str(pin))
     wiringpi.digitalWrite(pin, val)
 
 def read(pin):
