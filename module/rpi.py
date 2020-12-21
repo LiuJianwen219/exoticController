@@ -150,7 +150,7 @@ class RPI:
         if deploy == "DEV":
             print("program Bit, path: " + bitFilePath)
             return
-        fpga.program_file(bitFilePath)
+        return fpga.program_file(bitFilePath)
 
     #def getSEG(self): # 软件模拟，废弃
     #    for i in range(0, 8):
@@ -181,7 +181,7 @@ class RPI:
         write(PS2_CLK, 1)
         cnt = 0
         for i in range(0, 8): # 8位数据
-            if SCANCODE_KEYDOWN[asciiCode]&SCANCODE_MAST[i] > 0:
+            if SCANCODE_KEYDOWN[asciiCode][0]&SCANCODE_MAST[i] > 0:
                 logger.error(str(i) + str(1))
                 cnt += 1
                 write(PS2_DAT, 1)
