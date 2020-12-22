@@ -90,6 +90,16 @@ types = [
 
     'OP_PS2_SEND',
     'OP_PS2_SEND_SUCC',
+
+    'AUTH_RABBIT',
+    'AUTH_RABBIT_SUCC',
+    'AUTH_RABBIT_FAIL',
+
+    'TEST_PROGRAM',
+    'TEST_PROGRAM_SUCC',
+    'TEST_PROGRAM_FAIL',
+    'TEST_READ_RESULT',
+    'TEST_READ_RESULT_SUCC',
 ]
 
 for i, type_ in enumerate(types):

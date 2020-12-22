@@ -65,12 +65,10 @@ def on_message(ws, message):
         threadpush.setDaemon(True)
         threadpush.setName("pushing_stream_thread")
         threadpush.start()
-
     elif dict_['type'] == ACT_SYNC_SW_BTN:
         data = {'type': ACT_SYNC_SW_BTN_SUCC,
                 'content': {'SWState': rpi.SWState, 'BTNState': rpi.BTNState}}
         ws.send(json.dumps(data).encode("utf-8"))
-
     elif dict_['type'] == ACT_RELEASE:
         rpi.setStateFree()
         #stop the sub process
@@ -111,7 +109,6 @@ def on_message(ws, message):
 
         data = {'type': OP_PS2_SEND_SUCC}
         ws.send(json.dumps(data).encode("utf-8"))
-
     elif dict_['type'] == OP_PROGRAM:
         print(dict_['content']['userId'])
         print(dict_['content']['type'])
@@ -148,17 +145,53 @@ def on_message(ws, message):
         seg = rpi.getSEG()
         data = {'type': REQ_SEG_SUCC, 'seg': seg}
         ws.send(json.dumps(data).encode("utf-8"))
-
     elif dict_['type'] == REQ_LED:
         led = rpi.getLED()
         data = {'type': REQ_LED_SUCC, 'led': led}
         ws.send(json.dumps(data).encode("utf-8"))
-
     elif dict_['type'] == REQ_READ_DATA:
         seg_led = rpi.get_4SEG_1LED()
         data = {'type': REQ_READ_DATA_SUCC, 'seg': seg_led['seg'], 'led': seg_led['led']}
         ws.send(json.dumps(data).encode("utf-8"))
 
+    elif dict_['type'] == TEST_PROGRAM:
+        print(dict_['content']['userId'])
+        print(dict_['content']['type'])
+        print(dict_['content']['fid'])
+        print(dict_['content']['count'])
+        print(dict_['content']['fileName'])
+        userId = dict_['content']['userId']
+        type = dict_['content']['type']
+        fid = dict_['content']['fid']
+        count = dict_['content']['count']
+        fileName = dict_['content']['fileName']
+
+        url = "http://" + "192.168.80.129" + ":" + "8000" + "/test/download/?deviceId=" + \
+              str(deviceNum) + "&userId=" + userId + "&type=" + type + \
+              "&fid=" + fid + "&count=" + str(count) + "&fileName=" + fileName
+        r = requests.get(url)  # create HTTP response object
+
+        if r.status_code == 200:
+            print(bitFilePath)
+            if os.path.exists(bitFilePath):
+                print(os.getcwd())
+            with open(bitFilePath, 'wb') as f:
+                f.write(r.content)
+
+            rpi.programBit() # program the constant filepath
+
+            data = {'type': TEST_PROGRAM_SUCC}
+            ws.send(json.dumps(data).encode("utf-8"))
+        else:
+            data = {'type': TEST_PROGRAM_FAIL}
+            ws.send(json.dumps(data).encode("utf-8"))
+    elif dict_['type'] == TEST_READ_RESULT:
+        data = {'type': TEST_READ_RESULT_SUCC,
+                'testStatus': "Complete",
+                'testResult': [{"index": 0, "result": "测试通过", "info": "正确"},
+                          {"index": 1, "result": "答案错误", "info": "0x40!=0x44"}]
+                }
+        ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == INIT_FILE_UPLOAD:
         data = {'type': INIT_FILE_UPLOAD_SUCC}
