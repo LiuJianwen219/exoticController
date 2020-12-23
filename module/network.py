@@ -50,6 +50,7 @@ def on_message(ws, message):
     if dict_["type"] == UPDATE_DEVICE_SUCC:
         print("UPDATE_DEVICE_SUCC")
     elif dict_['type'] == ACQUIRE_DEVICE_FOR_EXP:
+        print("exp   exp    exp")
         print(dict_['content']['Uid'])
         rpi.setStateBusy()
 
@@ -66,6 +67,7 @@ def on_message(ws, message):
         threadpush.setName("pushing_stream_thread")
         threadpush.start()
     elif dict_['type'] == ACQUIRE_DEVICE_FOR_TEST:
+        print("test  test  test")
         print(dict_['content']['Uid'])
         rpi.setStateBusy()
         data = {'type': ACQUIRE_DEVICE_SUCC_TEST,
