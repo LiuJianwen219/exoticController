@@ -305,6 +305,7 @@ class RPI:
     def _READ_TEST_RESULT(self):
         cnt = 0
         while (read(TEST_READY) == 0):
+            print(str(read(26))+str(read(27))+str(read(28))+str(read(29))+str(read(31)))
             logger.info("wait: " + str(cnt))
             cnt = cnt + 1
             time.sleep(0.1)
