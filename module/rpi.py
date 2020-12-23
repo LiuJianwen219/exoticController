@@ -37,7 +37,9 @@ RPI_OUTPUTS = [0, 1, 2, 3, 22, 23, 24, 25, 11]
 SEGLED_DATA = [26, 27, 28, 29, 31]
 SEGLED_CLK = 11
 
-
+TEST_CLK = 11
+TEST_READY = 31
+TEST_DATA = [29, 28, 27, 26]
 
 logger = logging.getLogger('rpi.' + __name__)
 
@@ -68,6 +70,7 @@ class RPI:
         self._BUTTON_INIT() # 初始化 BUTTON 输出为 1
         self._SWITCH_INIT() # 程序启动时，初始化 SW 的状态为全 0
         self._READ_DATA_INIT() # 初始化读取数据的时钟
+        self._READ_TEST_DATA_INIT() # 初始化测试模块读取数据的时钟
         logger.info('GPIO ports initialization done.')
 
     def setStateBusy(self):
@@ -90,6 +93,8 @@ class RPI:
         self._WRITE_SN74HC595()
     def _READ_DATA_INIT(self):
         write(SEGLED_CLK, 0)
+    def _READ_TEST_DATA_INIT(self):
+        write(TEST_CLK, 0)
 
 
     def open_SW(self, index):
@@ -130,8 +135,22 @@ class RPI:
             return
         self.BTNState[index] = 0
     def sendPS2(self, byte):
-        print("send " + byte)
+        print("send PS2 " + byte)
         self._WRITE_PS2_8BIT(ord(byte))
+    def readTestResult(self): # 测试通过为 0
+        result = self._READ_TEST_RESULT()
+        code, data = self._READ_TEST_DATA()
+        if code == 0:
+            testResultData = []
+            for each in data:
+                flag = 0 if each[2] == each[3] else flag = 1
+                testResultData.append({'index': each[0], 'result': "测试正确" if flag == 0 else "测试错误",
+                                       'info': "输入: "+each[1]+" 正确: "+each[2]+" 你的: "+each[3]})
+
+            return [result, testResultData]
+        return [result, []]
+
+
 
     # #Temporary code for sending a ps/2 scan code via uart
     # def send_ps2_keydown(self, code):
@@ -282,6 +301,63 @@ class RPI:
         write(SEGLED_CLK, 0)
         return {'seg': seg, 'led': led}
 
+
+    def _READ_TEST_RESULT(self):
+        cnt = 0
+        while (read(TEST_READY) == 0):
+            logger.info("wait: " + str(cnt))
+            cnt = cnt + 1
+            time.sleep(0.1)
+        tmp = 0
+        for i in range(0, 4): # 如果测试通过则返回 4‘b0000，否则返回 4'b1111
+            tmp = (tmp<<1) | read(TEST_DATA[i])
+        return tmp
+
+    def _READ_TEST_DATA(self):
+        # code表示测试数据读取模式
+        code, r = self.__READ_TEST_DATA_UNIT1__(4)
+
+        # width表示测试书读取长度，目前需要是4的倍数，范围为 0~64位
+        width, r = self.__READ_TEST_DATA_UNIT1__(4)
+        width = width * 4
+
+        # 当数据读取得到 ready信号为 0，表示数据读取完成
+        data = []
+        if code == 0:  # 模式 0的数据格式为：测试标签，输入数据，正确数据，用户错误数据
+            ready = 1
+            while(ready):
+                d0, r = self.__READ_TEST_DATA_UNIT1__(width)  # 测试标签
+                d1, r = self.__READ_TEST_DATA_UNIT1__(width)  # 输入数据
+                d2, r = self.__READ_TEST_DATA_UNIT1__(width)  # 正确数据
+                d3, r = self.__READ_TEST_DATA_UNIT1__(width)  # 用户错误数据
+                data.append([d0, d1, d2, d3])
+                ready = r
+
+        return code, data
+
+    def __READ_TEST_DATA_UNIT1__(self, n):
+        if n%4 != 0 or n>64:
+            return None
+        write(TEST_CLK, 1)
+        write(TEST_CLK, 0)  # 表示启动读取数据
+        tmp = 0
+        ready = 1
+        for i in range(0, n, 4):
+            data, r = self.__READ_TEST_DATA_ATOMIC4__()
+            tmp = (tmp<<4) | data
+            ready = r
+            logger.error("test 4:"+str(data)+" "+str(r))
+        return tmp, ready
+
+
+    def __READ_TEST_DATA_ATOMIC4__(self):
+        write(TEST_CLK, 1)
+        tmp = 0
+        for j in range(0, 4):
+            tmp = (tmp << 1) | read(TEST_DATA[j])
+        ready = read(TEST_READY)
+        write(TEST_CLK, 0)
+        return tmp, ready
 
 def write(pin, val):
     if deploy == 'DEV':

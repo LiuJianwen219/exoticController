@@ -166,7 +166,7 @@ def on_message(ws, message):
         count = dict_['content']['count']
         fileName = dict_['content']['fileName']
 
-        url = "http://" + "192.168.80.129" + ":" + "8000" + "/test/download/?deviceId=" + \
+        url = "http://" + webIP + ":" + webPort + "/test/download/?deviceId=" + \
               str(deviceNum) + "&userId=" + userId + "&type=" + type + \
               "&fid=" + fid + "&count=" + str(count) + "&fileName=" + fileName
         r = requests.get(url)  # create HTTP response object
@@ -186,10 +186,11 @@ def on_message(ws, message):
             data = {'type': TEST_PROGRAM_FAIL}
             ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == TEST_READ_RESULT:
+        testSummary, testResult = rpi.readTestResult()
         data = {'type': TEST_READ_RESULT_SUCC,
                 'testStatus': "Complete",
-                'testResult': [{"index": 0, "result": "测试通过", "info": "正确"},
-                          {"index": 1, "result": "答案错误", "info": "0x40!=0x44"}]
+                'testResult': testResult,
+                'testSummary': "测试通过" if testSummary == 0 else "测试失败",
                 }
         ws.send(json.dumps(data).encode("utf-8"))
 
