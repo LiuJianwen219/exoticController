@@ -37,6 +37,7 @@ RPI_OUTPUTS = [0, 1, 2, 3, 22, 23, 24, 25, 11]
 SEGLED_DATA = [26, 27, 28, 29, 31]
 SEGLED_CLK = 11
 
+TEST_RST = 0
 TEST_CLK = 11
 TEST_READY = 31
 TEST_DATA = [29, 28, 27, 26]
@@ -138,6 +139,7 @@ class RPI:
         print("send PS2 " + byte)
         self._WRITE_PS2_8BIT(ord(byte))
     def readTestResult(self): # 测试通过为 0
+        self._TEST_RESET()  # 测试复位
         result = self._READ_TEST_RESULT()
         code, data = self._READ_TEST_DATA()
         if code == 0:
@@ -301,6 +303,10 @@ class RPI:
         write(SEGLED_CLK, 0)
         return {'seg': seg, 'led': led}
 
+
+    def _TEST_RESET(self):
+        write(TEST_RST, 1)
+        write(TEST_RST, 0)
 
     def _READ_TEST_RESULT(self):
         cnt = 0
