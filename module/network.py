@@ -65,6 +65,13 @@ def on_message(ws, message):
         threadpush.setDaemon(True)
         threadpush.setName("pushing_stream_thread")
         threadpush.start()
+    elif dict_['type'] == ACQUIRE_DEVICE_FOR_TEST:
+        print(dict_['content']['Uid'])
+        rpi.setStateBusy()
+        data = {'type': ACQUIRE_DEVICE_SUCC_TEST,
+                'content': {'device': deviceNum, 'Uid': dict_['content']['Uid']}}
+        ws.send(json.dumps(data).encode("utf-8"))
+
     elif dict_['type'] == ACT_SYNC_SW_BTN:
         data = {'type': ACT_SYNC_SW_BTN_SUCC,
                 'content': {'SWState': rpi.SWState, 'BTNState': rpi.BTNState}}
