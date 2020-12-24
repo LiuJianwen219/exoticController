@@ -322,10 +322,10 @@ class RPI:
 
     def _READ_TEST_DATA(self):
         # code表示测试数据读取模式
-        code, r = self.__READ_TEST_DATA_UNIT1__(4)
+        code, r = self.__READ_TEST_DATA_ATOMIC4__()
 
         # width表示测试书读取长度，目前需要是4的倍数，范围为 0~64位
-        width, r = self.__READ_TEST_DATA_UNIT1__(4)
+        width, r = self.__READ_TEST_DATA_ATOMIC4__()
         width = width * 4
 
         # 当数据读取得到 ready信号为 0，表示数据读取完成
@@ -345,8 +345,6 @@ class RPI:
     def __READ_TEST_DATA_UNIT1__(self, n):
         if n%4 != 0 or n>64:
             return None
-        write(TEST_CLK, 1)
-        write(TEST_CLK, 0)  # 表示启动读取数据
         tmp = 0
         ready = 1
         for i in range(0, n, 4):
@@ -359,6 +357,7 @@ class RPI:
 
     def __READ_TEST_DATA_ATOMIC4__(self):
         write(TEST_CLK, 1)
+        time.sleep(0.001)
         tmp = 0
         for j in range(0, 4):
             tmp = (tmp << 1) | read(TEST_DATA[j])
