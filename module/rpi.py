@@ -348,7 +348,7 @@ class RPI:
             data, r = self.__READ_TEST_DATA_ATOMIC4__()
             tmp = (tmp<<4) | data
             ready = r
-            logger.error("test 4:"+str(data)+" "+str(r))
+            #logger.error("test 4:"+str(data)+" "+str(r))
         return tmp, ready
 
 
@@ -361,7 +361,7 @@ class RPI:
         ready = read(TEST_READY)
         write(TEST_CLK, 0)
         time.sleep(0.001)
-        print("read: "+ str(tmp) + " " + str(ready))
+        #print("read: "+ str(tmp) + " " + str(ready))
         return tmp, ready
 
 def write(pin, val):
