@@ -146,8 +146,8 @@ class RPI:
             testResultData = []
             for each in data:
                 flag = 0 if each[2] == each[3] else 1
-                testResultData.append({'index': each[0], 'result': "测试正确" if flag == 0 else "测试错误",
-                                       'info': "输入: "+each[1]+" 正确: "+each[2]+" 你的: "+each[3]})
+                testResultData.append({'index': str(each[0]), 'result': "测试正确" if flag == 0 else "测试错误",
+                                       'info': "输入: "+str(each[1])+" 正确: "+str(each[2])+" 你的: "+str(each[3])})
 
             return [result, testResultData]
         return [result, []]
