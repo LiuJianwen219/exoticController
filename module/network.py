@@ -199,7 +199,7 @@ def on_message(ws, message):
         data = {'type': TEST_READ_RESULT_SUCC,
                 'testStatus': "Complete",
                 'testResult': testResult,
-                'testSummary': "测试通过" if testSummary == 0 else "测试失败",
+                'testSummary': "测试通过" if testSummary == 15 else "测试失败",
                 }
         ws.send(json.dumps(data).encode("utf-8"))
 

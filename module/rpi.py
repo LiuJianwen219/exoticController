@@ -138,7 +138,7 @@ class RPI:
     def sendPS2(self, byte):
         print("send PS2 " + byte)
         self._WRITE_PS2_8BIT(ord(byte))
-    def readTestResult(self): # 测试通过为 0
+    def readTestResult(self): # 测试通过为 15
         self._TEST_RESET()  # 测试复位
         result = self._READ_TEST_RESULT()
         code, data = self._READ_TEST_DATA()
@@ -311,14 +311,11 @@ class RPI:
     def _READ_TEST_RESULT(self):
         cnt = 0
         while (read(TEST_READY) == 0):
-            print(str(read(26))+str(read(27))+str(read(28))+str(read(29))+str(read(31)))
-            logger.info("wait: " + str(cnt))
             cnt = cnt + 1
             time.sleep(0.1)
-        tmp = 0
-        for i in range(0, 4): # 如果测试通过则返回 4‘b0000，否则返回 4'b1111
-            tmp = (tmp<<1) | read(TEST_DATA[i])
-        return tmp
+        result, r = self.__READ_TEST_DATA_ATOMIC4__()
+        # 如果测试通过则返回 4‘b1111，否则返回 4'b0000
+        return result
 
     def _READ_TEST_DATA(self):
         # code表示测试数据读取模式
@@ -363,6 +360,8 @@ class RPI:
             tmp = (tmp << 1) | read(TEST_DATA[j])
         ready = read(TEST_READY)
         write(TEST_CLK, 0)
+        time.sleep(0.001)
+        print("read: "+ str(tmp) + " " + str(ready))
         return tmp, ready
 
 def write(pin, val):
