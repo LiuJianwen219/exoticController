@@ -54,7 +54,7 @@ class RPI:
     LEDState = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     def init(self):
-        if deploy == 'DEV':
+        if deploy != 'PRO':
             logger.debug('Function "rpi.init()" called in development mode.')
             return
         wiringpi.wiringPiSetup()
@@ -75,8 +75,14 @@ class RPI:
         logger.info('GPIO ports initialization done.')
 
     def setStateBusy(self):
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.setStateBusy()" called in development mode.')
+            return
         self.state = 1
     def setStateFree(self):
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.setStateFree()" called in development mode.')
+            return
         self.state = 0
     def getRPIState(self):
         return self.state
@@ -102,8 +108,8 @@ class RPI:
         if index not in SWITCHES:
             logger.error("sw index error {}".format(index))
             return
-        if deploy == "DEV":
-            logger.info("DEV: SW_mode:595 open sw {}".format(index))
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.open_SW({})" called in development mode.'.format(index))
             return
         else:
             self.SWState[index] = 1
@@ -112,8 +118,8 @@ class RPI:
         if index not in SWITCHES:
             logger.error("sw index error {}".format(index))
             return
-        if deploy == "DEV":
-            logger.info("DEV: SW_mode:595 close sw {}".format(index))
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.close_SW({})" called in development mode.'.format(index))
             return
         else:
             self.SWState[index] = 0
@@ -122,8 +128,8 @@ class RPI:
         if index not in BUTTONS:
             logger.error("btn index error {}".format(index))
             return
-        if deploy == "DEV":
-            logger.info("DEV: press btn {}".format(index))
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.press_BTN({})" called in development mode.'.format(index))
             return
         if not self._MATRIX_BUTTON_4_4_DOWN(index):
             logger.warning("button signal not process success")
@@ -131,14 +137,19 @@ class RPI:
         if index not in BUTTONS:
             logger.error("btn index error {}".format(index))
             return
-        if deploy == "DEV":
-            logger.info("DEV: release btn {}".format(index))
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.release_BTN({})" called in development mode.'.format(index))
             return
         self.BTNState[index] = 0
     def sendPS2(self, byte):
-        print("send PS2 " + byte)
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.sendPS2({})" called in development mode.'.format(byte))
+            return
         self._WRITE_PS2_8BIT(ord(byte))
     def readTestResult(self): # 测试通过为 15
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.readTestResult()" called in development mode.')
+            return [15, [{'index': str(0), 'result': "答案正确", 'info': "输入: 0"+" 正确: 0" + " 你的: 0"}]]
         self._TEST_RESET()  # 测试复位
         result = self._READ_TEST_RESULT()
         code, data = self._READ_TEST_DATA()
@@ -146,7 +157,7 @@ class RPI:
             testResultData = []
             for each in data:
                 flag = 0 if each[2] == each[3] else 1
-                testResultData.append({'index': str(each[0]), 'result': "测试正确" if flag == 0 else "测试错误",
+                testResultData.append({'index': str(each[0]), 'result': "答案正确" if flag == 0 else "答案错误",
                                        'info': "输入: "+str(each[1])+" 正确: "+str(each[2])+" 你的: "+str(each[3])})
 
             return [result, testResultData]
@@ -168,8 +179,8 @@ class RPI:
     #         self.ps2_uart_port.write(SCANCODE_KEYUP[code])
 
     def programBit(self):
-        if deploy == "DEV":
-            print("program Bit, path: " + bitFilePath)
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.programBit()" called in development mode.')
             return
         return fpga.program_file(bitFilePath)
 
@@ -182,6 +193,9 @@ class RPI:
     #        self.LEDState[i] = (self.LEDState[i] + random.randint(0, 16)) % 2
     #    return self.LEDState
     def get_4SEG_1LED(self):
+        if deploy != 'PRO':
+            logger.debug('Function "rpi.get_4SEG_1LED()" called in development mode.')
+            return {'seg': self.SEGState, 'led': self.LEDState}
         data = self._READ_4SEG_1LED()
         for i in range(0, 16):
             if i&1 :
@@ -365,7 +379,7 @@ class RPI:
         return tmp, ready
 
 def write(pin, val):
-    if deploy == 'DEV':
+    if deploy != 'PRO':
         logger.debug('Function "rpi.write()" called with pin={}, val={} '
                      'in development mode.'.format(pin, val))
         return
@@ -373,7 +387,7 @@ def write(pin, val):
     wiringpi.digitalWrite(pin, val)
 
 def read(pin):
-    if deploy == 'DEV':
+    if deploy != 'PRO':
         logger.debug('Function "rpi.read()" called with pin={} '
                      'in development mode.'.format(pin))
         return
