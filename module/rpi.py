@@ -161,6 +161,14 @@ class RPI:
                                        'info': "输入: "+str(each[1])+" 正确: "+str(each[2])+" 你的: "+str(each[3])})
 
             return [result, testResultData]
+        elif code == 1:
+            testResultData = []
+            for each in data:
+                flag = 0 if each[2] == each[3] else 1
+                testResultData.append({'index': str(each[0]), 'result': "答案正确" if flag == 0 else "答案错误",
+                                       'info': " 正确: " + str(each[2]) + " 你的: " + str(each[3])})
+
+            return [result, testResultData]
         return [result, []]
 
 
