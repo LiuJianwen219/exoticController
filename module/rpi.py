@@ -347,7 +347,16 @@ class RPI:
                 d0, r = self.__READ_TEST_DATA_UNIT1__(width)  # 测试标签
                 d1, r = self.__READ_TEST_DATA_UNIT1__(width)  # 输入数据
                 d2, r = self.__READ_TEST_DATA_UNIT1__(width)  # 正确数据
-                d3, r = self.__READ_TEST_DATA_UNIT1__(width)  # 用户错误数据
+                d3, r = self.__READ_TEST_DATA_UNIT1__(width)  # 用户数据
+                data.append([d0, d1, d2, d3])
+                ready = r
+        elif code == 1:
+            ready = 1
+            while (ready):
+                d0, r = self.__READ_TEST_DATA_UNIT1__(width)  # 测试标签
+                d1 = 0
+                d2, r = self.__READ_TEST_DATA_UNIT1__(width)  # 正确数据
+                d3, r = self.__READ_TEST_DATA_UNIT1__(width)  # 用户数据
                 data.append([d0, d1, d2, d3])
                 ready = r
 
