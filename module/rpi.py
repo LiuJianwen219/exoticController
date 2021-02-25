@@ -34,13 +34,13 @@ PS2_DAT = 23
 RPI_INPUTS  = [4, 5, 6, 7, 26, 27, 28, 29, 31]
 RPI_OUTPUTS = [0, 1, 2, 3, 22, 23, 24, 25, 11]
 
-SEGLED_DATA = [26, 27, 28, 29, 31]
+SEGLED_DATA = [26, 27, 28, 29, 31]  # 两个为什么顺序是相反的有待进一步测试
 SEGLED_CLK = 11
 
 TEST_RST = 0
 TEST_CLK = 11
 TEST_READY = 31
-TEST_DATA = [26, 27, 28, 29]
+TEST_DATA = [29, 28, 27, 26]  # 两个为什么顺序是相反的有待进一步测试
 
 logger = logging.getLogger('rpi.' + __name__)
 
