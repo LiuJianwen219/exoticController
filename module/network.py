@@ -171,8 +171,8 @@ def on_message(ws, message):
 
         userName = dict_['content']['userName']
         fid = dict_['content']['fid']
-        count = dict_['content']['userId']
-        bitFileName = dict_['content']['type']
+        count = dict_['content']['count']
+        bitFileName = dict_['content']['bitFileName']
 
 
         url = "http://" + webIP + ":" + webPort + "/download/?deviceId=" + \
