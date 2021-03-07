@@ -152,7 +152,10 @@ class RPI:
             return [15, [{'index': str(0), 'result': "答案正确", 'info': "输入: 0"+" 正确: 0" + " 你的: 0"}]]
         self._TEST_RESET()  # 测试复位
         result = self._READ_TEST_RESULT()
-        code, data = self._READ_TEST_DATA()
+        code = self._READ_TEST_CODE()
+        width = self._READ_TEST_WIDTH()
+        cycle = self._READ_TEST_CYCLE()
+        data = self._READ_TEST_DATA(code, width)
         if code == 0:
             testResultData = []
             for each in data:
@@ -160,7 +163,7 @@ class RPI:
                 testResultData.append({'index': str(each[0]), 'result': "答案正确" if flag == 0 else "答案错误",
                                        'info': "输入: "+str(each[1])+" 正确: "+str(each[2])+" 你的: "+str(each[3])})
 
-            return [result, testResultData]
+            return [result, cycle, testResultData]
         elif code == 1:
             testResultData = []
             for each in data:
@@ -168,8 +171,8 @@ class RPI:
                 testResultData.append({'index': str(each[0]), 'result': "答案正确" if flag == 0 else "答案错误",
                                        'info': " 正确: " + str(each[2]) + " 你的: " + str(each[3])})
 
-            return [result, testResultData]
-        return [result, []]
+            return [result, cycle, testResultData]
+        return [result, -1, []]
 
 
 
@@ -331,6 +334,8 @@ class RPI:
         write(TEST_RST, 0)
 
     def _READ_TEST_RESULT(self):
+        # result表示测试结果，正确为 F
+        # TODO 这里可以用来计算时间，用另一种方法，但是不够精确
         cnt = 0
         while (read(TEST_READY) == 0):
             cnt = cnt + 1
@@ -339,12 +344,26 @@ class RPI:
         # 如果测试通过则返回 4‘b1111，否则返回 4'b0000
         return result
 
-    def _READ_TEST_DATA(self):
+    def _READ_TEST_CODE(self):
         # code表示测试数据读取模式
         code, r = self.__READ_TEST_DATA_ATOMIC4__()
+        return code
 
+    def _READ_TEST_WIDTH(self):
         # width表示测试书读取长度，目前需要是4的倍数，范围为 0~64位
         width, r = self.__READ_TEST_DATA_ATOMIC4__()
+        return width
+
+    def _READ_TEST_CYCLE(self):
+        # cycle表示测试所用时间，是一个相对时间
+        cycle = 0
+        for i in range(0, 8):
+            cycleT, r = self.__READ_TEST_DATA_ATOMIC4__()
+            cycle = (cycle<<4) | cycleT
+        return cycle
+
+    def _READ_TEST_DATA(self, code, width):
+        # width表示测试书读取长度，目前需要是4的倍数，范围为 0~64位
         width = width * 4
 
         # 当数据读取得到 ready信号为 0，表示数据读取完成
@@ -368,7 +387,7 @@ class RPI:
                 data.append([d0, d1, d2, d3])
                 ready = r
 
-        return code, data
+        return data
 
     def __READ_TEST_DATA_UNIT1__(self, n):
         if n%4 != 0 or n>64:

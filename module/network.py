@@ -195,11 +195,12 @@ def on_message(ws, message):
             data = {'type': TEST_PROGRAM_FAIL}
             ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == TEST_READ_RESULT:
-        testSummary, testResult = rpi.readTestResult()
+        testSummary, cycle, testResult = rpi.readTestResult()
         data = {'type': TEST_READ_RESULT_SUCC,
                 'testStatus': "Complete",
                 'testResult': testResult,
                 'testSummary': "测试通过" if testSummary == 15 else "测试失败",
+                'usingCycle': cycle
                 }
         ws.send(json.dumps(data).encode("utf-8"))
 
