@@ -164,20 +164,20 @@ def on_message(ws, message):
         ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == TEST_PROGRAM:
-        print(dict_['content']['userId'])
-        print(dict_['content']['type'])
+        print(dict_['content']['userName'])
         print(dict_['content']['fid'])
         print(dict_['content']['count'])
-        print(dict_['content']['fileName'])
-        userId = dict_['content']['userId']
-        type = dict_['content']['type']
-        fid = dict_['content']['fid']
-        count = dict_['content']['count']
-        fileName = dict_['content']['fileName']
+        print(dict_['content']['bitFileName'])
 
-        url = "http://" + webIP + ":" + webPort + "/test/download/?deviceId=" + \
-              str(deviceNum) + "&userId=" + userId + "&type=" + type + \
-              "&fid=" + fid + "&count=" + str(count) + "&fileName=" + fileName
+        userName = dict_['content']['userName']
+        fid = dict_['content']['fid']
+        count = dict_['content']['userId']
+        bitFileName = dict_['content']['type']
+
+
+        url = "http://" + webIP + ":" + webPort + "/download/?deviceId=" + \
+              str(deviceNum) + "&userName=" + userName + \
+              "&fid=" + fid + "&count=" + str(count) + "&bitFileName=" + bitFileName
         r = requests.get(url)  # create HTTP response object
 
         if r.status_code == 200:
