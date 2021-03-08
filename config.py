@@ -25,6 +25,8 @@ if os.path.exists(settings_file):
     deviceNum = config["RPI_CLIENT"]["DEVICE_NUM"]
     bitFilePath = os.path.join(os.getcwd(), config["RPI_CLIENT"]["BIT_FILE_PATH"])
     platform = config["RPI_CLIENT"]["PLATFORM"]
+    FILE_SERVER_IP = config["FILE_SERVER"]["FILE_SERVER_IP"]
+    FILE_SERVER_PORT = config["FILE_SERVER"]["FILE_SERVER_PORT"]
     print(webIP)
     print(webPort)
     print(host)

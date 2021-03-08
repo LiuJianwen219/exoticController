@@ -175,8 +175,8 @@ def on_message(ws, message):
         bitFileName = dict_['content']['bitFileName']
 
 
-        url = "http://" + webIP + ":" + webPort + "/download/?deviceId=" + \
-              str(deviceNum) + "&userName=" + userName + \
+        url = "http://" + FILE_SERVER_IP + ":" + FILE_SERVER_PORT + \
+              "/download/?deviceId=" + str(deviceNum) + "&userName=" + userName + \
               "&fid=" + fid + "&count=" + str(count) + "&bitFileName=" + bitFileName
         r = requests.get(url)  # create HTTP response object
 
