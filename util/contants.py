@@ -44,26 +44,26 @@
 
 # Communication protocol
 types = [
-    'AUTH_USER',
-    'AUTH_SUCC_USER',
-    'AUTH_FAIL_USER',
+    'AUTH_USER',            # 0
+    'AUTH_SUCC_USER',       # 1
+    'AUTH_FAIL_USER',       # 2
     'AUTH_DEVICE',
     'AUTH_SUCC_DEVICE',
     'UPDATE_DEVICE',
     'UPDATE_DEVICE_SUCC',
     'ACT_SYNC',
-    'SYNC_DEVICE',
+    'SYNC_DEVICE',          # 8
 
     'ACT_ACQUIRE',
     'ACT_SYNC_SW_BTN',
     'ACT_SYNC_SW_BTN_SUCC',
     'INIT_FILE_UPLOAD',
-    'INIT_FILE_UPLOAD_SUCC',
+    'INIT_FILE_UPLOAD_SUCC',    # 13
     'ACQUIRE_FAIL',
     'ACQUIRE_SUCC',
     'ACQUIRE_DEVICE_FOR_EXP',
     'ACQUIRE_DEVICE_SUCC_EXP',
-    'ACQUIRE_DEVICE_FOR_TEST',
+    'ACQUIRE_DEVICE_FOR_TEST',  # 18
     'ACQUIRE_DEVICE_SUCC_TEST',
 
     'ACT_RELEASE',
@@ -71,39 +71,39 @@ types = [
     'REQ_SEG',
     'REQ_SEG_SUCC',
     'REQ_LED',
-    'REQ_LED_SUCC',
+    'REQ_LED_SUCC', # 24
     'REQ_READ_DATA',
     'REQ_READ_DATA_SUCC',
 
     'OP_PROGRAM',
     'OP_PROGRAM_SUCC',
 
-    'OP_SW_OPEN',
+    'OP_SW_OPEN',       # 29
     'OP_SW_CLOSE',
     'OP_SW_OPEN_DEVICE',
     'OP_SW_CLOSE_DEVICE',
     'OP_SW_CHANGED',
 
-    'OP_BTN_PRESS',
+    'OP_BTN_PRESS',     # 34
     'OP_BTN_RELEASE',
     'OP_BTN_PRESS_DEVICE',
     'OP_BTN_RELEASE_DEVICE',
     'OP_BTN_CHANGED',
 
-    'OP_PS2_SEND',
+    'OP_PS2_SEND',      # 39
     'OP_PS2_SEND_SUCC',
 
     'AUTH_RABBIT',
     'AUTH_RABBIT_SUCC',
     'AUTH_RABBIT_FAIL',
 
-    'AUTH_RABBIT',
+    'AUTH_RABBIT',      # 44
     'AUTH_RABBIT_SUCC',
     'AUTH_RABBIT_FAIL',
     'TEST_PROGRAM',
-    'TEST_PROGRAM_SUCC',
+    'TEST_PROGRAM_SUCC',# 48
     'TEST_PROGRAM_FAIL',
-    'TEST_READ_RESULT',
+    'TEST_READ_RESULT', # 50
     'TEST_READ_RESULT_SUCC',
 ]
 
