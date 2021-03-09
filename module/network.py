@@ -200,7 +200,8 @@ def on_message(ws, message):
                 'testStatus': "Complete",
                 'testResult': testResult,
                 'testSummary': "测试通过" if testSummary == 15 else "测试失败",
-                'usingCycle': cycle
+                'usingCycle': cycle,
+                'info': "测试超时" if testSummary == -1 else "测试正常",
                 }
         ws.send(json.dumps(data).encode("utf-8"))
 
