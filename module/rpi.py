@@ -342,7 +342,7 @@ class RPI:
         while (read(TEST_READY) == 0):
             cnt = cnt + 1
             time.sleep(0.1)
-            if cnt > MAX_TIME: # 测试超时，防止过分等待
+            if cnt > int(MAX_TIME): # 测试超时，防止过分等待
                 return None
         result, r = self.__READ_TEST_DATA_ATOMIC4__()
         # 如果测试通过则返回 4‘b1111，否则返回 4'b0000
