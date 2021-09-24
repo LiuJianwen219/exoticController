@@ -44,6 +44,7 @@
 
 # Communication protocol
 types = [
+    'WHO_YOU_ARE',
     'AUTH_USER',            # 0
     'AUTH_SUCC_USER',       # 1
     'AUTH_FAIL_USER',       # 2

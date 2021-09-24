@@ -164,21 +164,41 @@ def on_message(ws, message):
         ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == TEST_PROGRAM:
-        print(dict_['content']['userName'])
-        print(dict_['content']['fid'])
-        print(dict_['content']['count'])
-        print(dict_['content']['bitFileName'])
+        #--------------------------------------------------
+        #--------------------------------------------------
+        #-------------TODO---------------------------------
+        #--------------------------------------------------
+        #--------------------------------------------------
+        #--------------------------------------------------
+        # "userId": request.POST.get("userId", None),
+        # "testId": request.POST.get("testId", None),
+        # "submitId": request.POST.get("submitId", None),
+        # "topic": request.POST.get("topic", None),
+        # "state": request.POST.get("state", None),
+        # "status": request.POST.get("status", None),
+        # "message": request.POST.get("message", None),
+        print(dict_['content']['userId'])
+        print(dict_['content']['testId'])
+        print(dict_['content']['submitId'])
+        print(dict_['content']['topic'])
 
-        userName = dict_['content']['userName']
-        fid = dict_['content']['fid']
-        count = dict_['content']['count']
-        bitFileName = dict_['content']['bitFileName']
+        userId = dict_['content']['userId']
+        testId = dict_['content']['testId']
+        submitId = dict_['content']['submitId']
+        topic = dict_['content']['topic']
+
+        values = {
+            "userId": userId,
+            "testId": testId,
+            "submitId": submitId,
+            "topic": topic,
+        }
+
+        url = "http://" + FILE_SERVER_IP + ":" + FILE_SERVER_PORT + "/" + GET_BIT_API
+        r = requests.get(url=url, params=values)  # create HTTP response object
 
 
-        url = "http://" + FILE_SERVER_IP + ":" + FILE_SERVER_PORT + \
-              "/download/?deviceId=" + str(deviceNum) + "&userName=" + userName + \
-              "&fid=" + fid + "&count=" + str(count) + "&bitFileName=" + bitFileName
-        r = requests.get(url)  # create HTTP response object
+        #--------------------------------------------------
 
         if r.status_code == 200:
             print(bitFilePath)
@@ -214,6 +234,7 @@ def on_error(ws, error):
 
 def on_close(ws):
     print("### closed ###")
+
 
 def on_open(ws):
     data = {

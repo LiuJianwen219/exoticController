@@ -34,10 +34,6 @@ def program_idle():
 
 
 def check_djtgcfg():
-    if deploy == 'DEV':
-        logger.debug('Function "fpga.check_djtgcfg()" called in development mode.')
-        return
-
     try:
         res = sp.check_output('djtgcfg', shell=True)
     except sp.CalledProcessError as e:
@@ -50,6 +46,9 @@ def check_djtgcfg():
 
 
 def init():
+    if deploy != 'PRO':
+        logger.debug('Function "fpga.check_djtgcfg()" called in development mode.')
+        return
     check_djtgcfg()
     check_alive()
     logger.info('Successfully connected to the FPGA board.')
