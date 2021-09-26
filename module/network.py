@@ -195,8 +195,11 @@ def on_message(ws, message):
         }
 
         url = "http://" + FILE_SERVER_IP + ":" + FILE_SERVER_PORT + "/" + GET_BIT_API
+        print(url)
+        print(values)
         r = requests.get(url=url, params=values)  # create HTTP response object
-
+        print(r.content)
+        print(r.text)
 
         #--------------------------------------------------
 
@@ -212,6 +215,7 @@ def on_message(ws, message):
             data = {'type': TEST_PROGRAM_SUCC}
             ws.send(json.dumps(data).encode("utf-8"))
         else:
+            print(r.content)
             data = {'type': TEST_PROGRAM_FAIL}
             ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == TEST_READ_RESULT:
