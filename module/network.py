@@ -198,8 +198,6 @@ def on_message(ws, message):
         print(url)
         print(values)
         r = requests.get(url=url, params=values)  # create HTTP response object
-        print(r.content)
-        print(r.text)
 
         #--------------------------------------------------
 
