@@ -131,13 +131,13 @@ def on_message(ws, message):
         compileId = dict_['content']['compileId']
         bitFileName = dict_['content']['bitFileName']
 
-        if not isUpload:
+        if not isUpload or isUpload == "false":
             url = "http://"+FILE_SERVER_IP+":"+FILE_SERVER_PORT+"/"+GET_ONLINE_BIT_API
             values = {
                 "deviceId": str(deviceNum),
                 "userId": userId,
-                "type": type,
-                "expId": expId,
+                "experimentType": type,
+                "experimentId": expId,
                 "compileId": compileId,
             }
             r = requests.get(url, params=values) # create HTTP response object
@@ -146,8 +146,8 @@ def on_message(ws, message):
             values = {
                 "deviceId": str(deviceNum),
                 "userId": userId,
-                "type": type,
-                "expId": expId,
+                "experimentType": type,
+                "experimentId": expId,
                 "bitFileName": bitFileName,
             }
             r = requests.get(url, params=values)  # create HTTP response object
