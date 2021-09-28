@@ -123,17 +123,34 @@ def on_message(ws, message):
         print(dict_['content']['type'])
         print(dict_['content']['expId'])
         print(dict_['content']['isUpload'])
-        print(dict_['content']['bitFileName'])
+        print(dict_['content']['compileId'])
         userId = dict_['content']['userId']
         type = dict_['content']['type']
         expId = dict_['content']['expId']
         isUpload = dict_['content']['isUpload']
+        compileId = dict_['content']['compileId']
         bitFileName = dict_['content']['bitFileName']
 
-        url = "http://"+webIP+":"+webPort+"/experiment/download/?deviceId=" + \
-              str(deviceNum) + "&userId=" + userId + "&type=" + type + "&expId=" + \
-              expId + "&isUpload=" + str(isUpload) + "&bitFileName=" + bitFileName
-        r = requests.get(url)  # create HTTP response object
+        if not isUpload:
+            url = "http://"+FILE_SERVER_IP+":"+FILE_SERVER_PORT+"/"+GET_ONLINE_BIT_API
+            values = {
+                "deviceId": str(deviceNum),
+                "userId": userId,
+                "type": type,
+                "expId": expId,
+                "compileId": compileId,
+            }
+            r = requests.get(url, params=values) # create HTTP response object
+        else:
+            url = "http://" + FILE_SERVER_IP + ":" + FILE_SERVER_PORT + "/" + GET_OWN_BIT_API
+            values = {
+                "deviceId": str(deviceNum),
+                "userId": userId,
+                "type": type,
+                "expId": expId,
+                "bitFileName": bitFileName,
+            }
+            r = requests.get(url, params=values)  # create HTTP response object
 
         if r.status_code == 200:
             print(bitFilePath)
