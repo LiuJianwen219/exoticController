@@ -27,6 +27,7 @@ if os.path.exists(settings_file):
     platform = config["RPI_CLIENT"]["PLATFORM"]
     FILE_SERVER_IP = config["FILE_SERVER"]["FILE_SERVER_IP"]
     FILE_SERVER_PORT = config["FILE_SERVER"]["FILE_SERVER_PORT"]
+    GET_BIT_API = config["FILE_SERVER"]["GET_BIT_API"]
     GET_ONLINE_BIT_API = config["FILE_SERVER"]["GET_ONLINE_BIT_API"]
     GET_OWN_BIT_API = config["FILE_SERVER"]["GET_OWN_BIT_API"]
     MAX_TIME = config["TEST_PARAM"]["MAX_TIME"]
