@@ -34,6 +34,8 @@ cmdList.append(p2cmd)
 cmdList.append(p1cmd)
 global p1, p2
 
+debugx = False
+
 def push():
     global p1, p2
     p1.stdout.flush()
@@ -46,7 +48,8 @@ def push():
 ##---------------------------------------------------------
 
 def on_message(ws, message):
-    print(message)
+    if(debugx):
+        print(message)
     dict_ = json.loads(message)
     global p1,p2
     if dict_["type"] == UPDATE_DEVICE_SUCC:
