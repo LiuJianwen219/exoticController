@@ -48,7 +48,7 @@ def push():
 ##---------------------------------------------------------
 
 def on_message(ws, message):
-    if(debugx):
+    if debugx:
         print(message)
     dict_ = json.loads(message)
     global p1,p2
