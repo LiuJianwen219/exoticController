@@ -60,7 +60,11 @@ def on_message(ws, message):
         rpi.setStateBusy()
 
         data = {'type': ACQUIRE_DEVICE_SUCC_EXP,
-                'content': {'device': deviceNum, 'Uid': dict_['content']['Uid']}}
+                'content': {
+                    'device': deviceNum,
+                    'Uid': dict_['content']['Uid'],
+                    'device_type': DEVICE_TAGS,
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
 
         #start subprocess
@@ -76,7 +80,11 @@ def on_message(ws, message):
         print(dict_['content']['Uid'])
         rpi.setStateBusy()
         data = {'type': ACQUIRE_DEVICE_SUCC_TEST,
-                'content': {'device': deviceNum, 'Uid': dict_['content']['Uid']}}
+                'content': {
+                    'device': deviceNum,
+                    'Uid': dict_['content']['Uid'],
+                    'device_type': DEVICE_TAGS,
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == ACT_SYNC_SW_BTN:
@@ -273,6 +281,7 @@ def on_open(ws):
         'time': time.time(),
         # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
         'state': rpi.getRPIState(),
+        'device_type': DEVICE_TYPE,
     }
     ws.send(json.dumps(data).encode("utf-8"))
 
@@ -292,6 +301,7 @@ def websocketServerStart():
             'index': deviceNum,
             'time': time.time(), # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
             'state': rpi.getRPIState(),
+            'device_type': DEVICE_TYPE,
         }
         ws.send(json.dumps(data).encode("utf-8"))
         # Timer(1, sendBeat).start()

@@ -1,4 +1,5 @@
 import configparser
+import json
 import logging.config
 import yaml
 import os
@@ -21,6 +22,7 @@ if os.path.exists(settings_file):
     webPort = config["WEB_SERVER"]["WEBPORT"]
     host = config["WEB_SERVER"]["HOST"]
     port = config["WEB_SERVER"]["PORT"]
+    DEVICE_TAGS = json.loads(config["RPI_CLIENT"]["DEVICE_TAGS"])
     deploy = config["RPI_CLIENT"]["DEPLOY"]
     deviceNum = config["RPI_CLIENT"]["DEVICE_NUM"]
     bitFilePath = os.path.join(os.getcwd(), config["RPI_CLIENT"]["BIT_FILE_PATH"])
@@ -37,6 +39,9 @@ if os.path.exists(settings_file):
     print(port)
     print(deviceNum)
     print(bitFilePath)
+    print(DEVICE_TAGS[0])
+    a = True if "UNKNOWN" in DEVICE_TAGS else False
+    print(a)
 else:
     exit(-1)
 
