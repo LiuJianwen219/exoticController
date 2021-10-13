@@ -63,7 +63,7 @@ def on_message(ws, message):
                 'content': {
                     'device': deviceNum,
                     'Uid': dict_['content']['Uid'],
-                    'device_type': DEVICE_TAGS,
+                    'device_tags': DEVICE_TAGS,
                 }}
         ws.send(json.dumps(data).encode("utf-8"))
 
@@ -83,7 +83,7 @@ def on_message(ws, message):
                 'content': {
                     'device': deviceNum,
                     'Uid': dict_['content']['Uid'],
-                    'device_type': DEVICE_TAGS,
+                    'device_tags': DEVICE_TAGS,
                 }}
         ws.send(json.dumps(data).encode("utf-8"))
 
@@ -281,7 +281,7 @@ def on_open(ws):
         'time': time.time(),
         # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
         'state': rpi.getRPIState(),
-        'device_type': DEVICE_TYPE,
+        'device_tags': DEVICE_TAGS,
     }
     ws.send(json.dumps(data).encode("utf-8"))
 
@@ -301,7 +301,7 @@ def websocketServerStart():
             'index': deviceNum,
             'time': time.time(), # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
             'state': rpi.getRPIState(),
-            'device_type': DEVICE_TYPE,
+            'device_tags': DEVICE_TAGS,
         }
         ws.send(json.dumps(data).encode("utf-8"))
         # Timer(1, sendBeat).start()
