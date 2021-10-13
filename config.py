@@ -42,6 +42,7 @@ if os.path.exists(settings_file):
     print(DEVICE_TAGS[0])
     a = True if "UNKNOWN" in DEVICE_TAGS else False
     print(a)
+    print("UNKNOWN" in DEVICE_TAGS, type("UNKNOWN" in DEVICE_TAGS))
 else:
     exit(-1)
 

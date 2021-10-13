@@ -272,6 +272,7 @@ def on_open(ws):
     data = {
         'type': AUTH_DEVICE,
         'index': deviceNum,
+        'device_tags': DEVICE_TAGS,
     }
     ws.send(json.dumps(data))
 
