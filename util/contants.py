@@ -106,6 +106,12 @@ types = [
     'TEST_PROGRAM_FAIL',
     'TEST_READ_RESULT', # 50
     'TEST_READ_RESULT_SUCC',
+
+    'AUTH_ADMIN',
+    'AUTH_ADMIN_SUCC',
+    'AUTH_ADMIN_FAIL',
+    'ACT_SYNC_DETAIL',
+    'ACT_SYNC_DETAIL_SUCC',
 ]
 
 for i, type_ in enumerate(types):

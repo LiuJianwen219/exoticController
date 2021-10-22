@@ -25,8 +25,9 @@ fps = 25
 width = 960
 height = 540
 
-p1cmd = ['raspivid', '-t', '0', '-w', '960', '-h', '540', '-fps', '25', '-b', '200000','-vf', '-hf', '-o', '-']
-p2cmd = ['ffmpeg', '-i', '-', '-vcodec', 'copy','-bufsize','2k','-b:v','2k','-probesize','32', '-an', '-r', '25', '-f', 'flv', 'rtmp://47.96.95.218/live/device'+str(deviceNum)]
+p1cmd = ['raspivid', '-t', '0', '-w', '960', '-h', '540', '-fps', '25', '-b', '200000', '-vf', '-hf', '-o', '-']
+p2cmd = ['ffmpeg', '-i', '-', '-vcodec', 'copy', '-bufsize', '2k', '-b:v', '2k', '-probesize', '32', '-an', '-r', '25',
+         '-f', 'flv', 'rtmp://47.96.95.218/live/device' + str(deviceNum)]
 # raspivid -t 0 -w 960 -h 540 -fps 25 -b 200000 -vf -hf -o -
 # ffmpeg -i - -vcodec cop -bufsize 2k -b:v 2k -probesize 32 -an -r 25 -f flv rtmp://47.96.95.218/live/device0
 cmdList = []
@@ -35,6 +36,7 @@ cmdList.append(p1cmd)
 global p1, p2
 
 debugx = False
+
 
 def push():
     global p1, p2
@@ -45,13 +47,14 @@ def push():
             break
         p2.stdin.write(line)
 
+
 ##---------------------------------------------------------
 
 def on_message(ws, message):
     if debugx:
         print(message)
     dict_ = json.loads(message)
-    global p1,p2
+    global p1, p2
     if dict_["type"] == UPDATE_DEVICE_SUCC:
         print("UPDATE_DEVICE_SUCC")
     elif dict_['type'] == ACQUIRE_DEVICE_FOR_EXP:
@@ -67,7 +70,7 @@ def on_message(ws, message):
                 }}
         ws.send(json.dumps(data).encode("utf-8"))
 
-        #start subprocess
+        # start subprocess
         p1 = sp.Popen(p1cmd, stdout=sp.PIPE, stderr=open(os.devnull, 'wb'))
         p2 = sp.Popen(p2cmd, stdin=sp.PIPE)
         # open a new thread to write to the pipe
@@ -93,7 +96,7 @@ def on_message(ws, message):
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == ACT_RELEASE:
         rpi.setStateFree()
-        #stop the sub process
+        # stop the sub process
         p1.kill()
         p2.kill()
 
@@ -145,7 +148,7 @@ def on_message(ws, message):
         bitFileName = dict_['content']['bitFileName']
 
         if not isUpload or isUpload == "false":
-            url = "http://"+FILE_SERVER_IP+":"+FILE_SERVER_PORT+"/"+GET_ONLINE_BIT_API
+            url = "http://" + FILE_SERVER_IP + ":" + FILE_SERVER_PORT + "/" + GET_ONLINE_BIT_API
             values = {
                 "deviceId": str(deviceNum),
                 "userId": userId,
@@ -153,7 +156,7 @@ def on_message(ws, message):
                 "experimentId": expId,
                 "compileId": compileId,
             }
-            r = requests.get(url, params=values) # create HTTP response object
+            r = requests.get(url, params=values)  # create HTTP response object
         else:
             url = "http://" + FILE_SERVER_IP + ":" + FILE_SERVER_PORT + "/" + GET_OWN_BIT_API
             values = {
@@ -172,7 +175,7 @@ def on_message(ws, message):
             with open(bitFilePath, 'wb') as f:
                 f.write(r.content)
 
-            rpi.programBit() # program the constant filepath
+            rpi.programBit()  # program the constant filepath
 
             data = {'type': OP_PROGRAM_SUCC}
             ws.send(json.dumps(data).encode("utf-8"))
@@ -194,12 +197,12 @@ def on_message(ws, message):
         ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == TEST_PROGRAM:
-        #--------------------------------------------------
-        #--------------------------------------------------
-        #-------------TODO---------------------------------
-        #--------------------------------------------------
-        #--------------------------------------------------
-        #--------------------------------------------------
+        # --------------------------------------------------
+        # --------------------------------------------------
+        # -------------TODO---------------------------------
+        # --------------------------------------------------
+        # --------------------------------------------------
+        # --------------------------------------------------
         # "userId": request.POST.get("userId", None),
         # "testId": request.POST.get("testId", None),
         # "submitId": request.POST.get("submitId", None),
@@ -229,7 +232,7 @@ def on_message(ws, message):
         print(values)
         r = requests.get(url=url, params=values)  # create HTTP response object
 
-        #--------------------------------------------------
+        # --------------------------------------------------
 
         if r.status_code == 200:
             print(bitFilePath)
@@ -238,7 +241,7 @@ def on_message(ws, message):
             with open(bitFilePath, 'wb') as f:
                 f.write(r.content)
 
-            rpi.programBit() # program the constant filepath
+            rpi.programBit()  # program the constant filepath
 
             data = {'type': TEST_PROGRAM_SUCC}
             ws.send(json.dumps(data).encode("utf-8"))
@@ -261,14 +264,17 @@ def on_message(ws, message):
         data = {'type': INIT_FILE_UPLOAD_SUCC}
         ws.send(json.dumps(data).encode("utf-8"))
 
+
 def on_error(ws, error):
     print(error)
+
 
 def on_close(ws):
     print("### closed ###")
 
 
 def on_open(ws):
+    time.sleep(2)
     data = {
         'type': AUTH_DEVICE,
         'index': deviceNum,
@@ -276,16 +282,15 @@ def on_open(ws):
     }
     ws.send(json.dumps(data))
 
+    time.sleep(1)
     data = {
         'type': UPDATE_DEVICE,
         'index': deviceNum,
-        'time': time.time(),
-        # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
+        'time': time_now(),
         'state': rpi.getRPIState(),
         'device_tags': DEVICE_TAGS,
     }
     ws.send(json.dumps(data).encode("utf-8"))
-
 
 
 def websocketServerStart():
@@ -300,13 +305,17 @@ def websocketServerStart():
         data = {
             'type': UPDATE_DEVICE,
             'index': deviceNum,
-            'time': time.time(), # "time" : time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime()),
+            'time': time_now(),
             'state': rpi.getRPIState(),
             'device_tags': DEVICE_TAGS,
         }
         ws.send(json.dumps(data).encode("utf-8"))
-        # Timer(1, sendBeat).start()
+        Timer(30, sendBeat).start()
 
-    Timer(1, sendBeat).start()
+    Timer(30, sendBeat).start()
 
     ws.run_forever()
+
+
+def time_now():
+    return time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime())
