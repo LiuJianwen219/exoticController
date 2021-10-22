@@ -1,6 +1,13 @@
 import random
+dic = {
+    "asd": "asd",
+}
 
-BUTTONS_IN = {0: 54, 1: 1, 2: 2, 3: 3}
-print(BUTTONS_IN[0])
+print(dic)
 
-print(random.randint(0, 8) % 8)
+dic2 = dic.copy()
+
+dic2["fasd"] = "dasdsa"
+
+print(dic2)
+print(dic)

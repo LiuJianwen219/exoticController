@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import datetime
 import json
 import os
 import time
@@ -67,6 +68,7 @@ def on_message(ws, message):
                     'device': deviceNum,
                     'Uid': dict_['content']['Uid'],
                     'device_tags': DEVICE_TAGS,
+                    'time': time_now(),
                 }}
         ws.send(json.dumps(data).encode("utf-8"))
 
@@ -87,12 +89,17 @@ def on_message(ws, message):
                     'device': deviceNum,
                     'Uid': dict_['content']['Uid'],
                     'device_tags': DEVICE_TAGS,
+                    'time': time_now(),
                 }}
         ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == ACT_SYNC_SW_BTN:
         data = {'type': ACT_SYNC_SW_BTN_SUCC,
-                'content': {'SWState': rpi.SWState, 'BTNState': rpi.BTNState}}
+                'content': {
+                    'SWState': rpi.SWState,
+                    'BTNState': rpi.BTNState,
+                    'time': time_now(),
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == ACT_RELEASE:
         rpi.setStateFree()
@@ -104,29 +111,41 @@ def on_message(ws, message):
         rpi.open_SW(dict_['content']['id'])
 
         data = {'type': OP_SW_CHANGED,
-                'content': {'id': dict_['content']['id'],
-                            'changeTo': dict_['content']['changeTo']}}
+                'content': {
+                    'id': dict_['content']['id'],
+                    'changeTo': dict_['content']['changeTo'],
+                    'time': time_now(),
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_SW_CLOSE_DEVICE:
         rpi.close_SW(dict_['content']['id'])
 
         data = {'type': OP_SW_CHANGED,
-                'content': {'id': dict_['content']['id'],
-                            'changeTo': dict_['content']['changeTo']}}
+                'content': {
+                    'id': dict_['content']['id'],
+                    'changeTo': dict_['content']['changeTo'],
+                    'time': time_now(),
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_BTN_PRESS_DEVICE:
         rpi.press_BTN(dict_['content']['id'])
 
         data = {'type': OP_BTN_CHANGED,
-                'content': {'id': dict_['content']['id'],
-                            'changeTo': dict_['content']['changeTo']}}
+                'content': {
+                    'id': dict_['content']['id'],
+                    'changeTo': dict_['content']['changeTo'],
+                    'time': time_now(),
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_BTN_RELEASE_DEVICE:
         rpi.release_BTN(dict_['content']['id'])
 
         data = {'type': OP_BTN_CHANGED,
-                'content': {'id': dict_['content']['id'],
-                            'changeTo': dict_['content']['changeTo']}}
+                'content': {
+                    'id': dict_['content']['id'],
+                    'changeTo': dict_['content']['changeTo'],
+                    'time': time_now(),
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == OP_PS2_SEND:
 
@@ -177,10 +196,16 @@ def on_message(ws, message):
 
             rpi.programBit()  # program the constant filepath
 
-            data = {'type': OP_PROGRAM_SUCC}
+            data = {'type': OP_PROGRAM_SUCC,
+                    'content': {
+                        'time': time_now(),
+                    }}
             ws.send(json.dumps(data).encode("utf-8"))
         else:
-            data = {'type': OP_PROGRAM_ERROR}
+            data = {'type': OP_PROGRAM_ERROR,
+                    'content': {
+                        'time': time_now(),
+                    }}
             ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == REQ_SEG:
@@ -243,11 +268,17 @@ def on_message(ws, message):
 
             rpi.programBit()  # program the constant filepath
 
-            data = {'type': TEST_PROGRAM_SUCC}
+            data = {'type': TEST_PROGRAM_SUCC,
+                    'content': {
+                        'time': time_now(),
+                    }}
             ws.send(json.dumps(data).encode("utf-8"))
         else:
             print(r.content)
-            data = {'type': TEST_PROGRAM_FAIL}
+            data = {'type': TEST_PROGRAM_FAIL,
+                    'content': {
+                        'time': time_now(),
+                    }}
             ws.send(json.dumps(data).encode("utf-8"))
     elif dict_['type'] == TEST_READ_RESULT:
         testSummary, cycle, testResult = rpi.readTestResult()
@@ -257,11 +288,15 @@ def on_message(ws, message):
                 'testSummary': "测试通过" if testSummary == 15 else "测试失败",
                 'usingCycle': cycle,
                 'info': "测试超时" if testSummary == -1 else "测试正常",
+                'time': time_now(),
                 }
         ws.send(json.dumps(data).encode("utf-8"))
 
     elif dict_['type'] == INIT_FILE_UPLOAD:
-        data = {'type': INIT_FILE_UPLOAD_SUCC}
+        data = {'type': INIT_FILE_UPLOAD_SUCC,
+                'content': {
+                    'time': time_now(),
+                }}
         ws.send(json.dumps(data).encode("utf-8"))
 
 
@@ -279,6 +314,7 @@ def on_open(ws):
         'type': AUTH_DEVICE,
         'index': deviceNum,
         'device_tags': DEVICE_TAGS,
+        'time': time_now(),
     }
     ws.send(json.dumps(data))
 
@@ -318,4 +354,4 @@ def websocketServerStart():
 
 
 def time_now():
-    return time.strftime("%Y-%m-%d %b %a %H:%M:%S", time.localtime())
+    return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
