@@ -266,7 +266,12 @@ def on_message(ws, message):
             with open(bitFilePath, 'wb') as f:
                 f.write(r.content)
 
+            print(userId, testId, submitId, topic, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            start = time.time()
             rpi.programBit()  # program the constant filepath
+            end = time.time()
+            print(userId, testId, submitId, topic, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            print(userId, testId, submitId, topic, end-start)
 
             data = {'type': TEST_PROGRAM_SUCC,
                     'content': {

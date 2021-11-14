@@ -154,6 +154,10 @@ class RPI:
         result = self._READ_TEST_RESULT()
         if result is None:
             return [-1, -1, []]
+
+        print("read", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        start = time.time()
+
         code = self._READ_TEST_CODE()
         width = self._READ_TEST_WIDTH()
         cycle = self._READ_TEST_CYCLE()
@@ -165,6 +169,10 @@ class RPI:
                 testResultData.append({'index': str(each[0]), 'result': "答案正确" if flag == 0 else "答案错误",
                                        'info': "输入: "+str(each[1])+" 正确: "+str(each[2])+" 你的: "+str(each[3])})
 
+            end = time.time()
+            print("read", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            print("read", end - start)
+
             return [result, cycle, testResultData]
         elif code == 1:
             testResultData = []
@@ -172,6 +180,10 @@ class RPI:
                 flag = 0 if each[2] == each[3] else 1
                 testResultData.append({'index': str(each[0]), 'result': "答案正确" if flag == 0 else "答案错误",
                                        'info': " 正确: " + str(each[2]) + " 你的: " + str(each[3])})
+
+            end = time.time()
+            print("read", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+            print("read", end - start)
 
             return [result, cycle, testResultData]
         return [result, -1, []]
@@ -339,11 +351,18 @@ class RPI:
         # result表示测试结果，正确为 F
         # TODO 这里可以用来计算时间，用另一种方法，但是不够精确
         cnt = 0
+
+        print("test", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        start = time.time()
         while (read(TEST_READY) == 0):
             cnt = cnt + 1
             time.sleep(0.1)
             if cnt > int(MAX_TIME): # 测试超时，防止过分等待
                 return None
+        end = time.time()
+        print("test", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        print("test", end - start)
+
         result, r = self.__READ_TEST_DATA_ATOMIC4__()
         # 如果测试通过则返回 4‘b1111，否则返回 4'b0000
         return result
