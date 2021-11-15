@@ -57,7 +57,7 @@ def on_message(ws, message):
     dict_ = json.loads(message)
     global p1, p2
     if dict_["type"] == UPDATE_DEVICE_SUCC:
-        print("UPDATE_DEVICE_SUCC")
+        #print("UPDATE_DEVICE_SUCC")
     elif dict_['type'] == ACQUIRE_DEVICE_FOR_EXP:
         print("exp   exp    exp")
         print(dict_['content']['Uid'])
